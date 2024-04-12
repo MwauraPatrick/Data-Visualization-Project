@@ -1,6 +1,8 @@
 # Data-Visualization-Project
 Group Assignment
 
+Please see the group report here: https://docs.google.com/document/d/1ERKE3EloMDyXOAAYrLuF_0XaoCiNZfEHjb1CSfOwh-s/edit
+
 PART 1 Metadata
 Version: Design (25/3/2024)
 Students: student 1 : Sariga Kakkamani 2364698 Hasselt University
@@ -62,6 +64,8 @@ Interaction: Users could interact with the plot by selecting specific locations,
 Benefits: This design would help explore trends in quantities, identify patterns of overstocking or understocking, and compare trends across different locations and products. It would provide a chronological understanding of inventory management dynamics and support decision-making to optimise inventory levels.
 Implementing these reworked sketches would provide a comprehensive and interactive visualisation of the supply chain, enabling users to explore and analyse the data more effectively to address the general questions mentioned.
 Appendix A
+
+https://docs.google.com/document/d/1ERKE3EloMDyXOAAYrLuF_0XaoCiNZfEHjb1CSfOwh-s/edit
 
 Description 
 The graphs we have designed will help us in addressing the questions we have raised. Specifically:
