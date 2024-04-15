@@ -1,11 +1,11 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+	import Counter from "./Counter.svelte";
+	import welcome from "$lib/images/suncharge.jpg";
+	import welcome_fallback from "$lib/images/suncharge.jpg";
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Main</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
@@ -13,12 +13,12 @@
 	<h1>
 		<span class="welcome">
 			<picture>
-				<source srcset={welcome} type="image/webp" />
+				<source srcset={welcome} type="image/jpg" />
 				<img src={welcome_fallback} alt="Welcome" />
 			</picture>
 		</span>
 
-		to your new<br />SvelteKit app
+		Welcome to your new<br />Dashboard app
 	</h1>
 
 	<h2>
@@ -52,7 +52,7 @@
 	.welcome img {
 		position: absolute;
 		width: 100%;
-		height: 100%;
+		height: 150px;
 		top: 0;
 		display: block;
 	}
