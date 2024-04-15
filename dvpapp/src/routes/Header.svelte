@@ -1,13 +1,15 @@
 <script>
 	import { page } from "$app/stores";
-	import logo from "$lib/images/svelte-logo.svg";
+	import logo from "$lib/images/uhasselt-standaard.png";
 	import github from "$lib/images/github.svg";
 </script>
 
 <header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
+	<div class="corner" id="photo-right">
+		<a
+			href="https://www.uhasselt.be/en?gad_source=5&gclid=EAIaIQobChMIvoycxtPEhQMV_5ZQBh1YkANzEAAYASAAEgKSJPD_BwE"
+		>
+			<img src={logo} alt="UHasselt" />
 		</a>
 	</div>
 
@@ -23,11 +25,11 @@
 				<a href="/about">About</a>
 			</li>
 			<li
-				aria-current={$page.url.pathname.startsWith("/sverdle")
+				aria-current={$page.url.pathname.startsWith("/groupinfo")
 					? "page"
 					: undefined}
 			>
-				<a href="/sverdle">Group Info</a>
+				<a href="/groupinfo">Group Info</a>
 			</li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="false">
@@ -35,7 +37,7 @@
 		</svg>
 	</nav>
 
-	<div class="corner">
+	<div class="corner" id="photo-left">
 		<a href="https://github.com/MwauraPatrick/Data-Visualization-Project">
 			<img src={github} alt="GitHub" />
 		</a>
@@ -46,6 +48,11 @@
 	header {
 		display: flex;
 		justify-content: space-between;
+		position: sticky;
+		top: 0;
+		z-index: 1000; /* Ensure the header is above other content */
+		background-color: rgb(202, 216, 228); /* Background color for the header */
+		/* Add other styles as needed */
 	}
 
 	.corner {
@@ -62,15 +69,22 @@
 	}
 
 	.corner img {
-		width: 2em;
-		height: 2em;
+		width: 3em;
+		height: 3em;
 		object-fit: contain;
+	}
+
+	#photo-left {
+		padding-right: 50px;
+	}
+	#photo-right {
+		padding-left: 50px;
 	}
 
 	nav {
 		display: flex;
-		justify-content: center;
-		--background: rgba(38, 22, 119, 0.7);
+		justify-content: left;
+		--background: rgb(174, 189, 61);
 	}
 
 	svg {

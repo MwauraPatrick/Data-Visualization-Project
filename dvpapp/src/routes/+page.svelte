@@ -1,12 +1,12 @@
 <script>
-	import Counter from "./Counter.svelte";
+	import Counter from "./main/main.svelte";
 	import welcome from "$lib/images/suncharge.jpg";
 	import welcome_fallback from "$lib/images/suncharge.jpg";
 </script>
 
 <svelte:head>
 	<title>Main</title>
-	<meta name="description" content="Svelte demo app" />
+	<meta name="description" content="dvproject" />
 </svelte:head>
 
 <section>
@@ -18,14 +18,10 @@
 			</picture>
 		</span>
 
-		Welcome to your new<br />Dashboard app
+		Welcome to your new <br />Supply Chain Dashboard
 	</h1>
 
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+	<main />
 </section>
 
 <style>
@@ -46,7 +42,7 @@
 		position: relative;
 		width: 100%;
 		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
+		padding: 0 0 calc(100% * 500 / 2048) 0;
 	}
 
 	.welcome img {
