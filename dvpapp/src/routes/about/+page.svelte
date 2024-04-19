@@ -4,8 +4,6 @@
 </svelte:head>
 
 <div class="text-column">
-	<h1>Suncharge Supply Chain Monitoring System</h1>
-
 	<p>
 		The Supply Chain Monitoring System project focuses on optimising the supply
 		chain for Suncharge, a company that produces batteries for car and home

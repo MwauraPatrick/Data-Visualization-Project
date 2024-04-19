@@ -1,58 +1,71 @@
+<!-- Header.svelte -->
 <script>
 	import { page } from "$app/stores";
 	import logo from "$lib/images/uhasselt-standaard.png";
 	import github from "$lib/images/github.svg";
 </script>
 
-<header>
-	<div class="corner" id="photo-right">
-		<a
-			href="https://www.uhasselt.be/en?gad_source=5&gclid=EAIaIQobChMIvoycxtPEhQMV_5ZQBh1YkANzEAAYASAAEgKSJPD_BwE"
-		>
-			<img src={logo} alt="UHasselt" />
-		</a>
-	</div>
-
-	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-			<li aria-current={$page.url.pathname === "/" ? "page" : undefined}>
-				<a href="/">Main</a>
-			</li>
-			<li aria-current={$page.url.pathname === "/about" ? "page" : undefined}>
-				<a href="/about">About</a>
-			</li>
-			<li
-				aria-current={$page.url.pathname.startsWith("/groupinfo")
-					? "page"
-					: undefined}
+<header id="main-header">
+	<div class="banner">
+		<div class="corner" id="photo-right">
+			<a
+				href="https://www.uhasselt.be/en?gad_source=5&gclid=EAIaIQobChMIvoycxtPEhQMV_5ZQBh1YkANzEAAYASAAEgKSJPD_BwE"
 			>
-				<a href="/groupinfo">Group Info</a>
-			</li>
-		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="false">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
-
-	<div class="corner" id="photo-left">
-		<a href="https://github.com/MwauraPatrick/Data-Visualization-Project">
-			<img src={github} alt="GitHub" />
-		</a>
+				<img src={logo} alt="UHasselt" />
+			</a>
+		</div>
+		<div class="text-box">
+			<p class="title"><strong>Suncharge Supply Chain</strong></p>
+			<p class="subtitle">Monitoring System</p>
+		</div>
+		<div class="corner" id="photo-left">
+			<a href="https://github.com/MwauraPatrick/Data-Visualization-Project">
+				<img src={github} alt="GitHub" />
+			</a>
+		</div>
 	</div>
 </header>
+
+<nav>
+	<svg viewBox="0 0 2 3" aria-hidden="true">
+		<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
+	</svg>
+	<ul>
+		<li aria-current={$page.url.pathname === "/" ? "page" : undefined}>
+			<a href="/">Main</a>
+		</li>
+		<li aria-current={$page.url.pathname === "/about" ? "page" : undefined}>
+			<a href="/about">About</a>
+		</li>
+		<li
+			aria-current={$page.url.pathname.startsWith("/groupinfo")
+				? "page"
+				: undefined}
+		>
+			<a href="/groupinfo">Group Info</a>
+		</li>
+	</ul>
+	<svg viewBox="0 0 2 3" aria-hidden="false">
+		<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
+	</svg>
+</nav>
 
 <style>
 	header {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		position: sticky;
 		top: 0;
-		z-index: 1000; /* Ensure the header is above other content */
-		background-color: rgb(202, 216, 228); /* Background color for the header */
-		/* Add other styles as needed */
+		z-index: 1100;
+		background-color: rgb(000, 255, 230);
+		padding: 0 1rem;
+	}
+
+	.banner {
+		display: flex;
+		align-items: center;
+		flex-grow: 1;
 	}
 
 	.corner {
@@ -74,22 +87,35 @@
 		object-fit: contain;
 	}
 
-	#photo-left {
-		padding-right: 50px;
+	.text-box {
+		text-align: center;
+		flex-grow: 1;
+		padding: 0 1rem;
 	}
-	#photo-right {
-		padding-left: 50px;
+
+	.title {
+		font-size: 1.5rem;
+		margin: 0;
+	}
+
+	.subtitle {
+		font-size: 1rem;
+		margin: 0;
 	}
 
 	nav {
 		display: flex;
-		justify-content: left;
-		--background: rgb(174, 189, 61);
+		justify-content: center;
+		background-color: rgb(000, 000, 000);
+		padding: 0rem 1rem;
+		position: sticky;
+		z-index: 1000;
+		top: 20px;
 	}
 
 	svg {
-		width: 2em;
-		height: 3em;
+		width: 0.5em;
+		height: 2em;
 		display: block;
 	}
 
@@ -98,45 +124,35 @@
 	}
 
 	ul {
-		position: relative;
 		padding: 0;
 		margin: 0;
-		height: 3em;
 		display: flex;
-		justify-content: center;
-		align-items: center;
 		list-style: none;
-		background: var(--background);
-		background-size: contain;
 	}
 
 	li {
+		margin: 0 0.5rem;
 		position: relative;
-		height: 100%;
 	}
 
 	li[aria-current="page"]::before {
-		--size: 6px;
 		content: "";
-		width: 0;
-		height: 0;
+		width: 100%;
+		height: 2px;
 		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-		border-top: var(--size) solid var(--color-theme-1);
+		bottom: 0;
+		left: 0;
+		background-color: var(--color-theme-1);
 	}
 
 	nav a {
 		display: flex;
-		height: 100%;
 		align-items: center;
-		padding: 0 0.5rem;
-		color: var(--color-text);
+		padding: 0.5rem 1rem;
+		color: white;
 		font-weight: 700;
 		font-size: 0.8rem;
 		text-transform: uppercase;
-		letter-spacing: 0.1em;
 		text-decoration: none;
 		transition: color 0.2s linear;
 	}
