@@ -23,15 +23,10 @@
 	}
 
 	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
+		margin: 10px;
+    
+}
+
 
 	footer {
 		display: flex;
@@ -49,5 +44,9 @@
 		footer {
 			padding: 12px 0;
 		}
+	}
+
+	maincontent{
+		margin: 0px;
 	}
 </style>
