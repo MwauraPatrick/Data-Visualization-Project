@@ -1,5 +1,7 @@
 <script>
-	import main from "./main/main.svelte";
+	import Counter from "./main/main.svelte";
+	import welcome from "$lib/images/suncharge.jpg";
+	import welcome_fallback from "$lib/images/suncharge.jpg";
 </script>
 
 <svelte:head>
@@ -7,57 +9,47 @@
 	<meta name="description" content="dvproject" />
 </svelte:head>
 
-<body>
-	<div class="welcome">
-		<h1>Welcome to your new Supply Chain Dashboard</h1>
-	</div>
+<section>
+	<h1>
+		<span class="welcome">
+			<picture>
+				<source srcset={welcome} type="image/jpg" />
+				<img src={welcome_fallback} alt="Welcome" />
+			</picture>
+		</span>
 
-	<section class="main-content">
-		<div class="content-item">Division 1</div>
-		<div class="content-item">Division 2</div>
-		<div class="content-item">Division 3</div>
-		<div class="content-item">Division 4</div>
-		<div class="content-item">Division 5</div>
-		<div class="content-item">Division 6</div>
-	</section>
-</body>
+		Welcome to your new <br />Supply Chain Dashboard
+	</h1>
+
+	<main />
+</section>
 
 <style>
-	body {
-		margin: 0;
-		padding: 0;
+	section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		flex: 0.6;
 	}
 
 	h1 {
-		font-size: 24px;
-		text-align: left;
-		padding: 0;
-		margin: 0;
+		width: 100%;
 	}
 
 	.welcome {
-		text-align: left;
-		padding: 1rem;
-		margin: 0;
+		display: block;
+		position: relative;
+		width: 100%;
+		height: 0;
+		padding: 0 0 calc(100% * 500 / 2048) 0;
 	}
 
-	.main-content {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: repeat(2, 100px);
-		gap: 1px;
-		align-content: center;
-		padding: 0;
-		margin: 0;
-		height: calc(100vh - 2rem); /* Adjust for header and footer */
-	}
-
-	.content-item {
-		background-color: #f9f9f9;
-		padding: 0;
-		box-sizing: border-box;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	.welcome img {
+		position: absolute;
+		width: 100%;
+		height: 150px;
+		top: 0;
+		display: block;
 	}
 </style>

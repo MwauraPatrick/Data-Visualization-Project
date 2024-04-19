@@ -58,7 +58,7 @@
 		position: sticky;
 		top: 0;
 		z-index: 1100;
-		background-color: rgb(000, 255, 230);
+		background-color: [--color-bg-1];
 		padding: 0 1rem;
 	}
 
@@ -106,7 +106,7 @@
 	nav {
 		display: flex;
 		justify-content: center;
-		background-color: rgb(000, 000, 000);
+		background-color: [--color-bg-1];
 		padding: 0rem 1rem;
 		position: sticky;
 		z-index: 1000;
@@ -149,7 +149,7 @@
 		display: flex;
 		align-items: center;
 		padding: 0.5rem 1rem;
-		color: white;
+		color: black;
 		font-weight: 700;
 		font-size: 0.8rem;
 		text-transform: uppercase;
