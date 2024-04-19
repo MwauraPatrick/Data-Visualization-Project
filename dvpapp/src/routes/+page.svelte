@@ -1,5 +1,4 @@
 <script>
-	import Counter from "./main/main.svelte";
 	import welcome from "$lib/images/suncharge.jpg";
 	import welcome_fallback from "$lib/images/suncharge.jpg";
 </script>
