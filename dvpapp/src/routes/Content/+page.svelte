@@ -4,6 +4,11 @@
 	const tabs = [
 		{ id: "map", label: "Map" },
 		{ id: "timeSeries", label: "Time Series Plot" },
+		{ id: "correlations", label: "Correlations" },
+		{ id: "plantcustomerdemand", label: "Plant Customer Demand" },
+		{ id: "inventoryquantities", label: "Inventory Quantities" },
+		{ id: "timecost", label: "Time-Cost" },
+		{ id: "news", label: "News" },
 	];
 
 	const activeTab = writable("map"); // Default active tab
@@ -19,10 +24,12 @@
 </svelte:head>
 
 <nav>
-	<ul>
-		{#each tabs as tab}
+	<ul role="tablist" class="tabs-container">
+		{#each tabs as tab (tab.id)}
 			<li>
 				<button
+					role="tab"
+					aria-selected={$activeTab === tab.id}
 					class:selected={$activeTab === tab.id}
 					on:click={() => setActiveTab(tab.id)}
 				>
@@ -33,10 +40,80 @@
 	</ul>
 </nav>
 
-{#if $activeTab === "map"}
-	<!-- Render map component or content -->
-	<div>Map component or content goes here</div>
-{:else if $activeTab === "timeSeries"}
-	<!-- Render time series plot component or content -->
-	<div>Time series plot component or content goes here</div>
-{/if}
+{#each tabs as tab}
+	{#if $activeTab === tab.id}
+		<section class="content">
+			{#if tab.id === "map"}
+				<h2>{tab.label} Content</h2>
+				<p>This is the content for the {tab.label} tab.</p>
+				<!-- Add map component here -->
+			{:else if tab.id === "timeSeries"}
+				<h2>{tab.label} Content</h2>
+				<p>This is the content for the {tab.label} tab.</p>
+				<!-- Add time series plot component here -->
+			{:else if tab.id === "correlations"}
+				<h2>{tab.label} Content</h2>
+				<p>This is the content for the {tab.label} tab.</p>
+				<!-- Add correlations component here -->
+			{:else if tab.id === "plantcustomerdemand"}
+				<h2>{tab.label} Content</h2>
+				<p>This is the content for the {tab.label} tab.</p>
+				<!-- Add plant customer demand component here -->
+			{:else if tab.id === "inventoryquantities"}
+				<h2>{tab.label} Content</h2>
+				<p>This is the content for the {tab.label} tab.</p>
+				<!-- Add inventory quantities component here -->
+			{:else if tab.id === "timecost"}
+				<h2>{tab.label} Content</h2>
+				<p>This is the content for the {tab.label} tab.</p>
+				<!-- Add time-cost component here -->
+			{:else if tab.id === "news"}
+				<h2>{tab.label} Content</h2>
+				<p>This is the content for the {tab.label} tab.</p>
+				<!-- Add news component here -->
+			{/if}
+		</section>
+	{/if}
+{/each}
+
+<style>
+	nav {
+		margin-bottom: 20px;
+		text-align: center; /* Align text in the center */
+	}
+
+	.tabs-container {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		justify-content: center; /* Center the tabs horizontally */
+		background-color: #f8f8f8;
+		border-bottom: 1px solid #ccc;
+	}
+
+	li {
+		margin-right: 10px;
+	}
+
+	button {
+		padding: 8px 16px;
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+		font-size: 14px;
+		color: #333;
+	}
+
+	button.selected {
+		background-color: #ddd;
+		color: #000;
+		font-weight: bold;
+	}
+
+	.content {
+		padding: 20px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+</style>
