@@ -1,5 +1,4 @@
 <script>
-	import { page } from '$app/stores';
 </script>
 
 <div class="container">
@@ -30,21 +29,21 @@
 	.container {
 		display: flex;
 		flex-direction: column;
-		align-items: center; 
-		justify-content: center; 
-		min-height: 100vh; 
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
 	}
 
 	.student-list {
 		display: flex;
-		flex-direction: row; 
+		flex-direction: row;
 		justify-content: center;
-		list-style-type: none; 
-		padding: 0; 
+		list-style-type: none;
+		padding: 0;
 	}
 
 	.student-list li {
-		margin: 0 1rem; 
-		text-align: center; 
+		margin: 0 1rem;
+		text-align: center;
 	}
 </style>
