@@ -12,21 +12,21 @@
 		efficiency.
 	</p>
 	<pre>Key Features</pre>
-	<li>1. Vendor Information</li>
+	<ul>1. Vendor Information</ul>
 	<p>
 		The data includes details about both external and internal vendors.
 		Understanding vendor performance, reliability, and lead times is crucial for
 		supply chain optimization.
 	</p>
 
-	<li>2. Production Plant Activities</li>
+	<ul>2. Production Plant Activities</ul>
 	<p>
 		Insights into production processes, capacity utilisation, and bottlenecks
 		are essential. We’ll analyse production efficiency, quality control, and
 		resource allocation.
 	</p>
 
-	<li>3. Distribution Data</li>
+	<ul>3. Distribution Data</ul>
 
 	<p>
 		Tracking distribution channels, transportation modes, and delivery times
@@ -34,13 +34,13 @@
 		in supply chain optimization.
 	</p>
 
-	<li>4. Customer Data</li>
+	<ul>4. Customer Data</ul>
 	<p>
 		Understanding customer demand patterns, preferences, and feedback informs
 		inventory management and production planning.
 	</p>
 
-	<li>5. Guiding Questions</li>
+	<ul>5. Guiding Questions</ul>
 	<p>
 		By addressing these questions, we aim to enhance Suncharge’s supply chain
 		efficiency and overall performance.
