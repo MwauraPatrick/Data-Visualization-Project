@@ -11,7 +11,10 @@
 	</main>
 
 	<footer>
-		<p><a href="https://kit.svelte.dev">Group 35</a></p>
+		<p>
+			<a href="https://svelte.dev/docs/introduction" target="_blank">Group 35</a
+			>
+		</p>
 	</footer>
 </div>
 
@@ -24,9 +27,7 @@
 
 	main {
 		margin: 10px;
-    
-}
-
+	}
 
 	footer {
 		display: flex;
@@ -46,7 +47,7 @@
 		}
 	}
 
-	maincontent{
+	maincontent {
 		margin: 0px;
 	}
 </style>
