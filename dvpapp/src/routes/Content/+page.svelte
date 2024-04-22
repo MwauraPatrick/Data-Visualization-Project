@@ -79,7 +79,7 @@
 <style>
 	nav {
 		margin-bottom: 20px;
-		text-align: center; /* Align text in the center */
+		text-align: center;
 	}
 
 	.tabs-container {
@@ -87,8 +87,8 @@
 		padding: 0;
 		margin: 0;
 		display: flex;
-		justify-content: center; /* Center the tabs horizontally */
-		background-color: #f8f8f8;
+		justify-content: center;
+		background-color: #021b28;
 		border-bottom: 1px solid #ccc;
 	}
 
@@ -99,26 +99,26 @@
 	button {
 		padding: 8px 16px;
 		border: none;
-		background-color: transparent;
+		background-color: rgb(73, 158, 227);
 		cursor: pointer;
 		font-size: 14px;
-		color: #333;
-		transition: background-color 0.3s; /* Smooth transition for background color change */
+		color: #06000c;
+		transition: background-color 0.3s;
 	}
 
 	button.selected {
-		background-color: #ddd;
+		background-color: #238fa2;
 		color: #000;
 		font-weight: bold;
 	}
 
 	button:hover {
-		background-color: #f0f0f0; /* Change background color on hover */
+		background-color: #471e9e;
 	}
 
 	.content {
 		padding: 20px;
-		border: 1px solid #ccc;
+		border: 1px solid #02152b;
 		border-radius: 4px;
 	}
 </style>
