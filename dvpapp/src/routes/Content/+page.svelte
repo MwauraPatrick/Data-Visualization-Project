@@ -1,75 +1,75 @@
+<script lang="ts">
+	import { writable } from "svelte/store";
 
-<script>
-    import { writable } from "svelte/store";
+	const tabs = [
+		{ id: "map", label: "Map" },
+		{ id: "timeSeries", label: "Time Series Plot" },
+		{ id: "correlations", label: "Correlations" },
+		{ id: "plantcustomerdemand", label: "Plant Customer Demand" },
+		{ id: "inventoryquantities", label: "Inventory Quantities" },
+		{ id: "timecost", label: "Time-Cost" },
+		{ id: "news", label: "News" },
+	];
 
-    const tabs = [
-        { id: "map", label: "Map" },
-        { id: "timeSeries", label: "Time Series Plot" },
-        { id: "correlations", label: "Correlations" },
-        { id: "plantcustomerdemand", label: "Plant Customer Demand" },
-        { id: "inventoryquantities", label: "Inventory Quantities" },
-        { id: "timecost", label: "Time-Cost" },
-        { id: "news", label: "News" },
-    ];
+	const activeTab = writable("map"); // Default active tab
 
-    const activeTab = writable("map"); // Default active tab
-
-    function setActiveTab(tabId) {
-        activeTab.set(tabId);
-    }
+	function setActiveTab(tabId: string) {
+		activeTab.set(tabId);
+	}
 </script>
 
 <svelte:head>
-    <title>Content</title>
-    <meta name="description" content="Main content" />
+	<title>Content</title>
+	<meta name="description" content="Main content" />
 </svelte:head>
 
 <nav>
-    <ul role="tablist" class="tabs-container">
-        {#each tabs as { id, label }}
-            <li>
-                <button
-                    role="tab"
-                    aria-selected={$activeTab === id}
-                    class:selected={$activeTab === id}
-                    on:click={() => setActiveTab(id)}
-                >
-                    {label}
-                </button>
-            </li>
-        {/each}
-    </ul>
+	<ul role="tablist" class="tabs-container">
+		{#each tabs as { id, label }}
+			<li>
+				<button
+					role="tab"
+					aria-selected={$activeTab === id}
+					class:selected={$activeTab === id}
+					on:click={() => setActiveTab(id)}
+				>
+					{label}
+				</button>
+			</li>
+		{/each}
+	</ul>
 </nav>
 
 {#each tabs as { id, label }}
-    <section class="content">
-			{#if tab.id === "map"}
-				<h2>{tab.label} Content</h2>
-				<p>This is the content for the {tab.label} tab.</p>
+	{#if $activeTab === id}
+		<section class="content">
+			{#if id === "map"}
+				<h2>{label} Content</h2>
+				<p>This is the content for the {label} tab.</p>
 				<!-- Add map component here -->
-			{:else if tab.id === "timeSeries"}
-				<h2>{tab.label} Content</h2>
-				<p>This is the content for the {tab.label} tab.</p>
+			{:else if id === "timeSeries"}
+				<h2>{label} Content</h2>
+				<p>This is the content for the {label} tab.</p>
 				<!-- Add time series plot component here -->
-			{:else if tab.id === "correlations"}
-				<h2>{tab.label} Content</h2>
-				<p>This is the content for the {tab.label} tab.</p>
+			{:else if id === "correlations"}
+				<h2>{label} Content</h2>
+				<p>This is the content for the {label} tab.</p>
 				<!-- Add correlations component here -->
-			{:else if tab.id === "plantcustomerdemand"}
-				<h2>{tab.label} Content</h2>
-				<p>This is the content for the {tab.label} tab.</p>
+			{:else if id === "plantcustomerdemand"}
+				<h2>{label} Content</h2>
+				<p>This is the content for the {label} tab.</p>
 				<!-- Add plant customer demand component here -->
-			{:else if tab.id === "inventoryquantities"}
-				<h2>{tab.label} Content</h2>
-				<p>This is the content for the {tab.label} tab.</p>
+			{:else if id === "inventoryquantities"}
+				<h2>{label} Content</h2>
+				<p>This is the content for the {label} tab.</p>
 				<!-- Add inventory quantities component here -->
-			{:else if tab.id === "timecost"}
-				<h2>{tab.label} Content</h2>
-				<p>This is the content for the {tab.label} tab.</p>
+			{:else if id === "timecost"}
+				<h2>{label} Content</h2>
+				<p>This is the content for the {label} tab.</p>
 				<!-- Add time-cost component here -->
-			{:else if tab.id === "news"}
-				<h2>{tab.label} Content</h2>
-				<p>This is the content for the {tab.label} tab.</p>
+			{:else if id === "news"}
+				<h2>{label} Content</h2>
+				<p>This is the content for the {label} tab.</p>
 				<!-- Add news component here -->
 			{/if}
 		</section>
@@ -77,7 +77,7 @@
 {/each}
 
 <style>
-    nav {
+	nav {
 		margin-bottom: 20px;
 		text-align: center; /* Align text in the center */
 	}
@@ -103,26 +103,6 @@
 		cursor: pointer;
 		font-size: 14px;
 		color: #333;
-	}
-
-	button.selected {
-		background-color: #ddd;
-		color: #000;
-		font-weight: bold;
-	}
-
-	.content {
-		padding: 20px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-	}
-	button {
-		padding: 8px 16px;
-		border: none;
-		background-color: transparent;
-		cursor: pointer;
-		font-size: 14px;
-		color: #333;
 		transition: background-color 0.3s; /* Smooth transition for background color change */
 	}
 
@@ -135,29 +115,10 @@
 	button:hover {
 		background-color: #f0f0f0; /* Change background color on hover */
 	}
-    button {
-        padding: 8px 16px;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        font-size: 14px;
-        color: #333;
-        transition: background-color 0.3s; /* Smooth transition for background color change */
-    }
 
-    button.selected {
-        background-color: #ddd;
-        color: #000;
-        font-weight: bold;
-    }
-
-    button:hover {
-        background-color: #f0f0f0; /* Change background color on hover */
-    }
-
-    .content {
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
+	.content {
+		padding: 20px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
 </style>
