@@ -1,6 +1,6 @@
 <script lang="ts">
+	import LeafletMap from './../../components/Map/leafletMap.svelte';
 	import { writable } from "svelte/store";
-	import Mapplot from "../../components/Map/plot.svelte";
 
 	const tabs = [
 		{ id: "map", label: "Map" },
@@ -48,7 +48,8 @@
 				<h2>{label} Content</h2>
 				<p>This is the content for the {label} tab.</p>
 				<!-- Add map component here -->
-				<Mapplot lat={0} lon={0} zoom={10} />
+				<LeafletMap />
+				<!--<Mapplot lat={0} lon={0} zoom={10} />-->
 			{:else if id === "timeSeries"}
 				<h2>{label} Content</h2>
 				<p>This is the content for the {label} tab.</p>
