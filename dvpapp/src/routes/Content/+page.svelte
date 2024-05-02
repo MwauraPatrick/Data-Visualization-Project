@@ -80,18 +80,21 @@ loadData();
 							<p>This is the content for the {label} tab.</p>
 							<!-- Add time-cost component here -->
 					{:else if id === "news"}
-							<h2>{label} Content</h2>
-							<p>This is the content for the {label} tab.</p>
-							{#each fetchedData as { file, keys }}
-							<div>
-								<h3>{file}</h3>
-								<ul>
-									{#each keys as key}
-										<li>{key}</li>
-									{/each}
-								</ul>
-							</div>
-						{/each}
+							<h1>Data Content</h1>
+							<h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
+							<p>Please view the list below of the said datasets and the variables in them</p>
+
+							
+{#each fetchedData as { file, keys }}
+  <div>
+    <h3>{file}</h3>
+    <ul>
+      {#each keys as key}
+        <li>{key}</li>
+      {/each}
+    </ul>
+  </div>
+{/each}
 						
 					{/if}
 			</section>

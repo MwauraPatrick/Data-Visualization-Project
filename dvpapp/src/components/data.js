@@ -2,11 +2,22 @@
 import Papa from 'papaparse';
 
 export async function fetchData() {
-  const fileNames = ['data/BOM.csv', 'data/Plants.csv']; // Add more file names as needed
+  const fileNames = [
+    'BOM.csv',
+    'Plants.csv',
+    'Customers.csv',
+    'Forecast.csv', 
+    'Inventory.csv',
+    'MaterialPlantRelation.csv',
+    'Materials.csv',
+    'Plants.csv',
+    'Purchases.csv',
+    'Sales.csv',
+    'Vendors.csv']; 
   const fetchedData = [];
 
   for (const fileName of fileNames) {
-    const url = `https://raw.githubusercontent.com/JannesPeeters/suncharge/main/${fileName}`;
+    const url = `https://raw.githubusercontent.com/JannesPeeters/suncharge/main/data/${fileName}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -16,9 +27,11 @@ export async function fetchData() {
     const csvData = await response.text();
     const parsedData = Papa.parse(csvData, { skipEmptyLines: true, header: true });
 
-    fetchedData.push({ file: fileName, keys: parsedData.meta.fields });
+    const nonEmptyKeys = parsedData.meta.fields.filter(key => key.trim() !== '');
+    fetchedData.push({ file: fileName, keys: nonEmptyKeys });
   }
 
   return fetchedData;
 }
+
 
