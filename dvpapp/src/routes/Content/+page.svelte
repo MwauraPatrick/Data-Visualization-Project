@@ -1,6 +1,14 @@
 <script lang="ts">
 	import LeafletMap from './../../components/Map/leafletMap.svelte';
-	import { csvData } from './../../components/data.svelte';
+	import { fetchData } from './../../components/data';
+	let fetchedData = [];
+
+async function loadData() {
+	fetchedData = await fetchData();
+}
+
+loadData();
+
 	import { writable } from "svelte/store";
 
 	const tabs = [
@@ -74,6 +82,16 @@
 					{:else if id === "news"}
 							<h2>{label} Content</h2>
 							<p>This is the content for the {label} tab.</p>
+							{#each fetchedData as { file, keys }}
+							<div>
+								<h3>{file}</h3>
+								<ul>
+									{#each keys as key}
+										<li>{key}</li>
+									{/each}
+								</ul>
+							</div>
+						{/each}
 						
 					{/if}
 			</section>
