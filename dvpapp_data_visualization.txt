@@ -1,0 +1,23 @@
+Customers.csv
+
+group by customer country , customer city and plant key.
+
+Summarize by sum
+
+
+
+Forcast.csv
+
+1. Group by plant key, requestDeliveryMonth date  sum quantity
+
+
+2. Group by material key, requestDeliveryMonth date, sum quantiy
+
+
+Inventroy.csv
+
+1. Group by material key, snapshort date, quantieties (Gross,onshelf,transit) and total
+2. Group by plant key , snapshot date,quantity(Gross,Onself,transit) total , forcasted , customer count
+
+
+
