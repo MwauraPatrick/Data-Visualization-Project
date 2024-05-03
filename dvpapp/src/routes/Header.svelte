@@ -9,7 +9,7 @@
 	<div class="banner">
 		<div class="corner" id="photo-right">
 			<a
-				href="https://www.uhasselt.be/en?gad_source=5&gclid=EAIaIQobChMIvoycxtPEhQMV_5ZQBh1YkANzEAAYASAAEgKSJPD_BwE"
+				href="https://www.uhasselt.be/en?gad_source=5&gclid=EAIaIQobChMIvoycxtPEhQMV_5ZQBh1YkANzEAAYASAAEgKSJPD_BwE" target="_blank"
 			>
 				<img src={logo} alt="UHasselt" />
 			</a>
@@ -19,7 +19,7 @@
 			<p class="subtitle">Monitoring System</p>
 		</div>
 		<div class="corner" id="photo-left">
-			<a href="https://github.com/MwauraPatrick/Data-Visualization-Project">
+			<a href="https://github.com/MwauraPatrick/Data-Visualization-Project" target="_blank">
 				<img src={github} alt="GitHub" />
 			</a>
 		</div>
