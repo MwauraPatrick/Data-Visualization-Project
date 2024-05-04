@@ -34,4 +34,14 @@ export async function fetchData() {
   return fetchedData;
 }
 
+export function isolateData(fetchedData, fileName) {
+  // Find the entry for the specified file name
+  const dataEntry = fetchedData.find(entry => entry.file === fileName);
+
+  if (!dataEntry) {
+    throw new Error(`${fileName} data not found in fetched data`);
+  }
+
+  return dataEntry.data;
+}
 
