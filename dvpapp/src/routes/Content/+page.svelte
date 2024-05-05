@@ -107,7 +107,7 @@ function setActiveTab(tabId: string) {
         <h1>Data Content</h1>
         <h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
         <p>Please view the list below of the said datasets and the variables in them</p>
-<!-- {#each fetchedData as { file, keys }}
+ {#each fetchedData as { file, keys }}
         <div>
             <h3>{file}</h3>
             <ul>
@@ -116,9 +116,8 @@ function setActiveTab(tabId: string) {
                 {/each}
             </ul>
         </div>
-        {/each}-->
-
-        {#each fetchedData as { file, content }}
+        {/each}
+<!-- {#each fetchedData as { file, content }}
         <div>
             <h3>{file}</h3>
             {#if content && Array.isArray(content)}
@@ -132,7 +131,8 @@ function setActiveTab(tabId: string) {
             {/if}
         </div>
     {/each}
-    
+    -->
+       
       
         {/if}
     </section>

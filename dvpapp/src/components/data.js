@@ -1,5 +1,4 @@
 // data.js
-
 import Papa from "papaparse";
 
 export async function fetchData() {
