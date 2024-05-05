@@ -1,64 +1,37 @@
 <script lang="ts">
-	import LeafletMap from './../../components/Map/leafletMap.svelte';
-	import TimeSeries from './../../components/Timeseries/timeseries.svelte';
-	import Correlation from './../../components/Correlation/correlation.svelte';
-	import TimeCost from './../../components/TimeCost/timecost.svelte';
-	
-	import { fetchData } from './../../components/data';
-	let fetchedData = [];
-import LeafletMap from './../../components/Map/leafletMap.svelte';
-import {
-  fetchData
-} from './../../components/data';
-let fetchedData = [];
+  import { fetchData } from './../../components/data';
+  import LeafletMap from './../../components/Map/leafletMap.svelte';
+  import TimeSeries from './../../components/Timeseries/timeseries.svelte';
+  import Correlation from './../../components/Correlation/correlation.svelte';
+  import TimeCost from './../../components/TimeCost/timecost.svelte';
+  import { writable } from "svelte/store";
 
-async function loadData() {
-  fetchedData = await fetchData();
-}
+  let fetchedData = [];
 
-loadData();
+  async function loadData() {
+    fetchedData = await fetchData();
+  }
 
-import {
-  writable
-} from "svelte/store";
+  loadData();
 
-const tabs = [{
-    id: "map",
-    label: "Map"
-  },
-  {
-    id: "timeSeries",
-    label: "Time Series Plot"
-  },
-  {
-    id: "correlations",
-    label: "Correlations"
-  },
-  {
-    id: "plantcustomerdemand",
-    label: "Plant Customer Demand"
-  },
-  {
-    id: "inventoryquantities",
-    label: "Inventory Quantities"
-  },
-  {
-    id: "timecost",
-    label: "Time-Cost"
-  },
-  {
-    id: "news",
-    label: "News"
-  },
-];
+  const tabs = [
+    { id: "map", label: "Map" },
+    { id: "timeSeries", label: "Time Series Plot" },
+    { id: "correlations", label: "Correlations" },
+    { id: "plantcustomerdemand", label: "Plant Customer Demand" },
+    { id: "inventoryquantities", label: "Inventory Quantities" },
+    { id: "timecost", label: "Time-Cost" },
+    { id: "news", label: "News" },
+  ];
 
-const activeTab = writable("map"); // Default active tab
+  const activeTab = writable("map"); // Default active tab
 
-function setActiveTab(tabId: string) {
-  activeTab.set(tabId);
-}
+  function setActiveTab(tabId: string) {
+    activeTab.set(tabId);
+  }
 </script>
 
+<!---->
 <svelte:head>
     <title>Content</title>
     <meta name="description" content="Main content" />
@@ -122,6 +95,10 @@ function setActiveTab(tabId: string) {
     {#each tabs as { id, label }}
     {#if $activeTab === id}
     <section class="content">
+
+
+
+
         {#if id === "map"}
         <h2>{label} Content</h2>
         <div>
