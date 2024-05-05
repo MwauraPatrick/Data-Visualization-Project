@@ -6,65 +6,62 @@
 	
 	import { fetchData } from './../../components/data';
 	let fetchedData = [];
-import LeafletMap from './../../components/Map/leafletMap.svelte';
-import {
-  fetchData
-} from './../../components/data';
-let fetchedData = [];
 
-async function loadData() {
-  fetchedData = await fetchData();
-}
 
-loadData();
+	async function loadData() {
+  		fetchedData = await fetchData();
+	}
 
-import {
-  writable
-} from "svelte/store";
+	loadData();
 
-const tabs = [{
-    id: "map",
-    label: "Map"
-  },
-  {
-    id: "timeSeries",
-    label: "Time Series Plot"
-  },
-  {
-    id: "correlations",
-    label: "Correlations"
-  },
-  {
-    id: "plantcustomerdemand",
-    label: "Plant Customer Demand"
-  },
-  {
-    id: "inventoryquantities",
-    label: "Inventory Quantities"
-  },
-  {
-    id: "timecost",
-    label: "Time-Cost"
-  },
-  {
-    id: "news",
-    label: "News"
-  },
-];
+	import {
+  		writable
+	} from "svelte/store";
 
-const activeTab = writable("map"); // Default active tab
+	const tabs = [{
+    	id: "map",
+    	label: "Map"
+  	},
+  	{
+    	id: "timeSeries",
+    	label: "Time Series Plot"
+  	},
+  	{
+    	id: "correlations",
+    	label: "Correlations"
+  	},
+  	{
+    	id: "plantcustomerdemand",
+    	label: "Plant Customer Demand"
+  	},
+  	{
+    	id: "inventoryquantities",
+    	label: "Inventory Quantities"
+  	},
+  	{
+    	id: "timecost",
+    	label: "Time-Cost"
+  	},
+  	{
+    	id: "news",
+    	label: "News"
+  	},
+	];
 
-function setActiveTab(tabId: string) {
-  activeTab.set(tabId);
-}
-</script>
+	const activeTab = writable("map"); // Default active tab
 
-<svelte:head>
-    <title>Content</title>
-    <meta name="description" content="Main content" />
-    </svelte:head>
+	function setActiveTab(tabId: string) {
+  		activeTab.set(tabId);
+	}
 
-    <nav>
+	</script>
+
+	<svelte:head>
+    	<title>Content</title>
+    	<meta name="description" content="Main content" />
+    	</svelte:head>
+
+    	<nav>
         <ul role="tablist" class="tabs-container">
             {#each tabs as { id, label }}
             <li>
@@ -115,43 +112,11 @@ function setActiveTab(tabId: string) {
 							<div>
 							<TimeCost />
 							</div>
+					
 					{:else if id === "news"}
-							<h1>Data Content</h1>
-							<h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
-							<p>Please view the list below of the said datasets and the variables in them</p>
-    {#each tabs as { id, label }}
-    {#if $activeTab === id}
-    <section class="content">
-        {#if id === "map"}
-        <h2>{label} Content</h2>
-        <div>
-            <p>This is the content for the {label} tab.</p>
-            <LeafletMap />
-        </div>
-        {:else if id === "timeSeries"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add time series plot component here -->
-        {:else if id === "correlations"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add correlations component here -->
-        {:else if id === "plantcustomerdemand"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add plant customer demand component here -->
-        {:else if id === "inventoryquantities"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add inventory quantities component here -->
-        {:else if id === "timecost"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add time-cost component here -->
-        {:else if id === "news"}
-        <h1>Data Content</h1>
-        <h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
-        <p>Please view the list below of the said datasets and the variables in them</p>
+							<h1> Data Content</h1>
+							<h2> Here is our first news, we have been able to fetch 11 datasets for our application</h2>
+							<p> Please view the list below of the said datasets and the variables in them</p>
 
         {#each fetchedData as { file, keys }}
         <div>
