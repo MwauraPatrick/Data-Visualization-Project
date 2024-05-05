@@ -1,5 +1,9 @@
 <script lang="ts">
 	import LeafletMap from './../../components/Map/leafletMap.svelte';
+	import TimeSeries from './../../components/Timeseries/timeseries.svelte';
+	import Correlation from './../../components/Correlation/correlation.svelte';
+	import TimeCost from './../../components/TimeCost/timecost.svelte';
+	
 	import { fetchData } from './../../components/data';
 	let fetchedData = [];
 
@@ -61,12 +65,16 @@ loadData();
 							</div>
 					{:else if id === "timeSeries"}
 							<h2>{label} Content</h2>
-							<p>This is the content for the {label} tab.</p>
-							<!-- Add time series plot component here -->
+							<div>
+							<TimeSeries />
+							</div>
+							
 					{:else if id === "correlations"}
 							<h2>{label} Content</h2>
-							<p>This is the content for the {label} tab.</p>
-							<!-- Add correlations component here -->
+							
+							<div>
+							<Correlation />
+							</div>
 					{:else if id === "plantcustomerdemand"}
 							<h2>{label} Content</h2>
 							<p>This is the content for the {label} tab.</p>
@@ -77,8 +85,9 @@ loadData();
 							<!-- Add inventory quantities component here -->
 					{:else if id === "timecost"}
 							<h2>{label} Content</h2>
-							<p>This is the content for the {label} tab.</p>
-							<!-- Add time-cost component here -->
+							<div>
+							<TimeCost />
+							</div>
 					{:else if id === "news"}
 							<h1>Data Content</h1>
 							<h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
