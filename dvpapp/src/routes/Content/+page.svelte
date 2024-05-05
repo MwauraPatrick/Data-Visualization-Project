@@ -114,51 +114,10 @@
 							</div>
 					
 					{:else if id === "news"}
-<<<<<<< HEAD
-							<h1> Data Content</h1>
-							<h2> Here is our first news, we have been able to fetch 11 datasets for our application</h2>
-							<p> Please view the list below of the said datasets and the variables in them</p>
-
-        {#each fetchedData as { file, keys }}
-=======
 							<h1>Data Content</h1>
 							<h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
 							<p>Please view the list below of the said datasets and the variables in them</p>
-    {#each tabs as { id, label }}
-    {#if $activeTab === id}
-    <section class="content">
-        {#if id === "map"}
-        <h2>{label} Content</h2>
-        <div>
-            <p>This is the content for the {label} tab.</p>
-            <LeafletMap />
-        </div>
-        {:else if id === "timeSeries"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add time series plot component here -->
-        {:else if id === "correlations"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add correlations component here -->
-        {:else if id === "plantcustomerdemand"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add plant customer demand component here -->
-        {:else if id === "inventoryquantities"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add inventory quantities component here -->
-        {:else if id === "timecost"}
-        <h2>{label} Content</h2>
-        <p>This is the content for the {label} tab.</p>
-        <!-- Add time-cost component here -->
-        {:else if id === "news"}
-        <h1>Data Content</h1>
-        <h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
-        <p>Please view the list below of the said datasets and the variables in them</p>
  {#each fetchedData as { file, keys }}
->>>>>>> e9fd76e7cd007442cd755dc1b54769dfa2e7051e
         <div>
             <h3>{file}</h3>
             <ul>
