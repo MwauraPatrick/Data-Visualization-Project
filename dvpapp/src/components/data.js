@@ -4,7 +4,6 @@ import Papa from "papaparse";
 export async function fetchData() {
   const fileNames = [
     "BOM.csv",
-    "Plants.csv",
     "Customers.csv",
     "Forecast.csv",
     "Inventory.csv",

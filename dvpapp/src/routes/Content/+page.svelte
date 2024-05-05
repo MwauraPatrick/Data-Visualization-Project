@@ -1,11 +1,27 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
 	import LeafletMap from './../../components/Map/leafletMap.svelte';
 	import TimeSeries from './../../components/Timeseries/timeseries.svelte';
 	import Correlation from './../../components/Correlation/correlation.svelte';
 	import TimeCost from './../../components/TimeCost/timecost.svelte';
 	
 	import { fetchData } from './../../components/data';
+    import { fetchData } from './../../components/dataprocessing.svelte';
 	let fetchedData = [];
+    let summary = [];
+    let selectedFile = ''; // Store the selected file here
+
+  onMount(async () => {
+    try {
+      fetchedData = await fetchData();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  });
+
+  function handleChange(event) {
+    selectedFile = event.target.value;
+  }
 
 
 	async function loadData() {
@@ -100,12 +116,27 @@
                 <h2>{label} Content</h2>
                 <p>This is the content for the {label} tab.</p>
                 <!-- Add plant customer demand component here -->
+                <!-- Your Svelte component template -->
+                <div>
+                    <h1>Customer Summary</h1>
+                    {#if summary.length > 0}
+                      {#each summary as { CustomerCountry, CustomerCity, PlantKey, count }}
+                        <div>
+                          <h3>{CustomerCountry} - {CustomerCity} - {PlantKey}</h3>
+                          <p>Count: {count}</p>
+                        </div>
+                      {/each}
+                    {:else}
+                      <p>No data available</p>
+                    {/if}
+                  </div>
+
+                  
             {:else if id === "inventoryquantities"}
-                <h2>{label} Content</h2>
-                <p>This is the content for the {label} tab.</p>
+                
                 <!-- Add inventory quantities component here -->
                 {#each fetchedData as { file, keys, data }}
-    {#if file === 'Customers.csv'}
+    {#if file === 'Materials.csv'}
         <div>
             <h3>{file}</h3>
             <ul>
@@ -141,19 +172,46 @@
                     <TimeCost />
                 </div>
             {:else if id === "news"}
-                <h1>Data Content</h1>
-                <h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
-                <p>Please view the list below of the said datasets and the variables in them</p>
-                {#each fetchedData as { file, keys }}
+            <div>
+                <h1>Data Summary</h1>
+                <select bind:value={selectedFile} on:change={handleChange}>
+                  <option value="">Select a file</option>
+                  {#each fetchedData as { file }}
+                    <option value={file}>{file}</option>
+                  {/each}
+                </select>
+              
+                {#each fetchedData as { file, keys, data }}
+                  {#if file === selectedFile}
                     <div>
-                        <h3>{file}</h3>
-                        <ul>
+                      <h3>{file}</h3>
+                      <ul>
+                        {#each keys as key}
+                          <li>{key}</li>
+                        {/each}
+                      </ul>
+                      <table>
+                        <thead>
+                          <tr>
                             {#each keys as key}
-                                <li>{key}</li>
+                              <th>{key}</th>
                             {/each}
-                        </ul>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {#each data as row}
+                            <tr>
+                              {#each keys as key}
+                                <td>{row[key]}</td>
+                              {/each}
+                            </tr>
+                          {/each}
+                        </tbody>
+                      </table>
                     </div>
+                  {/if}
                 {/each}
+              </div>
             {/if}
         </section>
     {/if}

@@ -1,54 +1,40 @@
-// Data processing
-import { onMount } from 'svelte';
-import { fetchData, isolateData } from './data';
+// dataprocessing.js
 
-onMount(async () => {
+import { fetchData } from './data'; // Update the path to match your file structure
+
+let fetchedData = [];
+let summary = []; // Declare summary here
+
+async function processData() {
   try {
-    const fetchedData = await fetchData();
+    fetchedData = await fetchData();
 
-    // isolate data for Customers.csv and summarize by counts
-    const customersData = isolateData(fetchedData, 'Customers.csv');
-    const summarizedCustomersData = summarizeDataByCounts(customersData);
-    console.log(summarizedCustomersData);
-    
+    console.log('Fetched data:', fetchedData); // Log the fetched data
 
-    // isolate data for Sales.csv
-    const salesData = isolateData(fetchedData, 'Sales.csv');
-    console.log(salesData);
+    // Find the Customers.csv data
+    const customersData = fetchedData.find((data) => data.file === 'Customers.csv');
 
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-
-export function summarizeDataByCounts(data) {
-  // Filter data for Customers.csv
-  const filteredData = filterData(data, 'Customers.csv');
-
-  // Group filtered data by CustomerCountry, CustomerCity, and PlantKey and summarize by counts
-  const groupedData = filteredData.reduce((acc, row) => {
-    const { CustomerCountry, CustomerCity, PlantKey } = row;
-    if (!CustomerCountry || !CustomerCity || !PlantKey) {
-      return acc; // Skip rows with missing keys
+    if (!customersData) {
+      throw new Error('Customers.csv data not found');
     }
 
-    const key = `${CustomerCountry}-${CustomerCity}-${PlantKey}`;
-    acc[key] = (acc[key] || 0) + 1;
-    return acc;
-  }, {});
+    // Group by CustomerCountry, CustomerCity, and PlantKey, and summarize by counts
+    let groupedData = customersData.data.reduce((acc, customer) => {
+      let key = `${customer.CustomerCountry}-${customer.CustomerCity}-${customer.PlantKey}`;
+      acc[key] = acc[key] || [];
+      acc[key].push(customer);
+      return acc;
+    }, {});
 
-  // Convert grouped data to array of objects
-  const summarizedData = Object.entries(groupedData).map(([key, count]) => {
-    const [CustomerCountry, CustomerCity, PlantKey] = key.split('-');
-    return { CustomerCountry, CustomerCity, PlantKey, Count: count };
-  });
+    summary = Object.keys(groupedData).map((key) => {
+      let [CustomerCountry, CustomerCity, PlantKey] = key.split('-');
+      return { CustomerCountry, CustomerCity, PlantKey, count: groupedData[key].length };
+    });
 
-  return summarizedData;
+    console.log('Summary:', summary); // Log the summary
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
-function filterData(data, file) {
-  return data.filter(row => row.file === file);
-}
-
-
+export { summary, processData };
