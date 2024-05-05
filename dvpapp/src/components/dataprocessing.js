@@ -1,8 +1,8 @@
 // Data processing
-import { fetchData } from './data';
-import { isolateData, summarizeDataByCounts } from './data';
+import { onMount } from 'svelte';
+import { fetchData, isolateData } from './data';
 
-(async () => {
+onMount(async () => {
   try {
     const fetchedData = await fetchData();
 
@@ -10,6 +10,7 @@ import { isolateData, summarizeDataByCounts } from './data';
     const customersData = isolateData(fetchedData, 'Customers.csv');
     const summarizedCustomersData = summarizeDataByCounts(customersData);
     console.log(summarizedCustomersData);
+    
 
     // isolate data for Sales.csv
     const salesData = isolateData(fetchedData, 'Sales.csv');
@@ -19,23 +20,22 @@ import { isolateData, summarizeDataByCounts } from './data';
   } catch (error) {
     console.error(error);
   }
-})();
-
-
+});
 
 
 export function summarizeDataByCounts(data) {
   // Filter data for Customers.csv
-  const filteredData = data.filter(row => row.file === 'Customers.csv');
+  const filteredData = filterData(data, 'Customers.csv');
 
   // Group filtered data by CustomerCountry, CustomerCity, and PlantKey and summarize by counts
   const groupedData = filteredData.reduce((acc, row) => {
-    const key = `${row.CustomerCountry}-${row.CustomerCity}-${row.PlantKey}`;
-    if (!acc[key]) {
-      acc[key] = 1;
-    } else {
-      acc[key]++;
+    const { CustomerCountry, CustomerCity, PlantKey } = row;
+    if (!CustomerCountry || !CustomerCity || !PlantKey) {
+      return acc; // Skip rows with missing keys
     }
+
+    const key = `${CustomerCountry}-${CustomerCity}-${PlantKey}`;
+    acc[key] = (acc[key] || 0) + 1;
     return acc;
   }, {});
 
@@ -47,3 +47,9 @@ export function summarizeDataByCounts(data) {
 
   return summarizedData;
 }
+
+function filterData(data, file) {
+  return data.filter(row => row.file === file);
+}
+
+
