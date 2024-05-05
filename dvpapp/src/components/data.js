@@ -36,11 +36,18 @@ export async function fetchData() {
     const nonEmptyKeys = parsedData.meta.fields.filter(
       (key) => key.trim() !== ""
     );
-    fetchedData.push({ file: fileName, keys: nonEmptyKeys });
+
+    // Include file name, variable names, and data
+    fetchedData.push({
+      file: fileName,
+      keys: nonEmptyKeys,
+      data: parsedData.data, // Entire parsed data (including headers)
+    });
   }
 
   return fetchedData;
 }
+
 
 export function isolateData(fetchedData, fileName) {
   // Find the entry for the specified file name

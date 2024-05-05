@@ -16,7 +16,6 @@ onMount(async () => {
     const salesData = isolateData(fetchedData, 'Sales.csv');
     console.log(salesData);
 
-    // You can continue processing other files in a similar manner
   } catch (error) {
     console.error(error);
   }
