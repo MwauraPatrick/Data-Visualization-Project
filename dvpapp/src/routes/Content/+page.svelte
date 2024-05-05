@@ -1,88 +1,52 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-	import LeafletMap from './../../components/Map/leafletMap.svelte';
-	import TimeSeries from './../../components/Timeseries/timeseries.svelte';
-	import Correlation from './../../components/Correlation/correlation.svelte';
-	import TimeCost from './../../components/TimeCost/timecost.svelte';
-	
-	import { fetchData } from './../../components/data';
-    import { summarizeCustomersByGroup,summarizeInventoryByGroup } from './../../components/dataprocessing';
-	let fetchedData = [];
-    let summary = [];
-    let inventorySummary = [];
-    let selectedFile = ''; // Store the selected file here
+  import { onMount } from 'svelte';
+  import LeafletMap from './../../components/Map/leafletMap.svelte';
+  import TimeSeries from './../../components/Timeseries/timeseries.svelte';
+  import Correlation from './../../components/Correlation/correlation.svelte';
+  import TimeCost from './../../components/TimeCost/timecost.svelte';
 
-    onMount(async () => {
-        try {
-            fetchedData = await fetchData();
-            summary = await summarizeCustomersByGroup();
-            inventorySummary = await summarizeInventoryByGroup();
-            console.log(summary);
-            console.log(inventorySummary);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    });
-  
+  import { fetchData } from './../../components/data';
+  import { summarizeCustomersByGroup, summarizeInventoryByGroup } from './../../components/dataprocessing';
+
+  let fetchedData = [];
+  let summary = [];
+  let inventorySummary = [];
+  let selectedFile = 'Customers.csv'; // Default selected file
+
   onMount(async () => {
-    try {
-      fetchedData = await fetchData();
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+      try {
+          fetchedData = await fetchData();
+          summary = await summarizeCustomersByGroup();
+          inventorySummary = await summarizeInventoryByGroup();
+          console.log(summary);
+          console.log(inventorySummary);
+      } catch (error) {
+          console.error('Error:', error);
+      }
   });
 
-  function handleChange(event) {
-    selectedFile = event.target.value;
+  async function handleChange(event) {
+      selectedFile = event.target.value;
   }
 
+  const tabs = [
+      { id: "map", label: "Map" },
+      { id: "timeSeries", label: "Time Series Plot" },
+      { id: "correlations", label: "Correlations" },
+      { id: "plantcustomerdemand", label: "Plant Customer Demand" },
+      { id: "inventoryquantities", label: "Inventory Quantities" },
+      { id: "timecost", label: "Time-Cost" },
+      { id: "news", label: "News" },
+  ];
 
-	async function loadData() {
-  		fetchedData = await fetchData();
-	}
+  import { writable } from "svelte/store";
+  const activeTab = writable("map"); // Default active tab
 
-	loadData();
-
-	import {
-  		writable
-	} from "svelte/store";
-
-	const tabs = [{
-    	id: "map",
-    	label: "Map"
-  	},
-  	{
-    	id: "timeSeries",
-    	label: "Time Series Plot"
-  	},
-  	{
-    	id: "correlations",
-    	label: "Correlations"
-  	},
-  	{
-    	id: "plantcustomerdemand",
-    	label: "Plant Customer Demand"
-  	},
-  	{
-    	id: "inventoryquantities",
-    	label: "Inventory Quantities"
-  	},
-  	{
-    	id: "timecost",
-    	label: "Time-Cost"
-  	},
-  	{
-    	id: "news",
-    	label: "News"
-  	},
-	];
-
-	const activeTab = writable("map"); // Default active tab
-
-	function setActiveTab(tabId: string) {
-  		activeTab.set(tabId);
-	}
+  function setActiveTab(tabId: string) {
+      activeTab.set(tabId);
+  }
 </script>
+
 
 <svelte:head>
     <title>Content</title>
@@ -135,8 +99,8 @@
 
             <h2>{label} Content</h2>
                 
-                <!-- Add inventory quantities component here -->
-             <div>
+               <!--Add inventory quantities component here 
+                 <div>
   <h1>Customer Summary</h1>
   <table>
     <thead>
@@ -159,32 +123,32 @@
     </tbody>
   </table>
 </div>
-
-
-
-
+                
+-->             
+                
+            
 <div>
     <h1>Inventory Summary</h1>
     <table>
       <thead>
         <tr>
-          <th>Material Plant Key</th>
-          <th>Date</th>
+          <th>Material Key</th>
           <th>Plant Key</th>
-          <th>Gross Inventory Quantity</th>
-          <th>On Shelf Inventory Quantity</th>
-          <th>In Transit Quantity</th>
+          <th>GIQ</th>
+          <th>OSQ</th>
+          <th>ITQ</th>
+          <th>Date</th>
         </tr>
       </thead>
       <tbody>
-        {#each summary as { MaterialPlantKey, Date, PlantKey, GIQ, OSQ, ITQ }}
+        {#each inventorySummary as { MaterialKey, Date, PlantKey, GIQ, OSQ, ITQ }}
           <tr>
-            <td>{MaterialPlantKey}</td>
-            <td>{Date}</td>
+            <td>{MaterialKey}</td>
             <td>{PlantKey}</td>
             <td>{GIQ}</td>
             <td>{OSQ}</td>
             <td>{ITQ}</td>
+            <td>{Date}</td>
           </tr>
         {/each}
       </tbody>

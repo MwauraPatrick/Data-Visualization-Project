@@ -1,60 +1,113 @@
-// dataprocessing.js
+// dataProcessing.js
 import { fetchData, isolateData } from "./data"; // Adjust the path to match your actual file structure
+// import { geocodeCity } from "./geocoding"; // Assuming you have a geocoding function
 
+async function fetchDataAndIsolateData(fileName) {
+  try {
+    const fetchedData = await fetchData();
+    return isolateData(fetchedData, fileName);
+  } catch (error) {
+    console.error(`Error fetching and isolating data for ${fileName}:`, error);
+    throw error;
+  }
+}
+
+/*
 export async function summarizeCustomersByGroup() {
-  const fetchedData = await fetchData();
-  const customersData = isolateData(fetchedData, "Customers.csv");
+  try {
+    const fetchedData = await fetchData();
+    const customersData = isolateData(fetchedData, "Customers.csv");
 
-  // Group by CustomerCountry, CustomerCity, and PlantKey
-  const groupedData = customersData.reduce((acc, customer) => {
-    const key = `${customer.CustomerCountry}-${customer.CustomerCity}-${customer.PlantKey}`;
-    if (!acc[key]) {
-      acc[key] = {
-        CustomerCountry: customer.CustomerCountry,
-        CustomerCity: customer.CustomerCity,
-        PlantKey: customer.PlantKey,
-        count: 0,
-      };
-    }
-    acc[key].count++;
-    return acc;
-  }, {});
+    // Group by CustomerCountry, CustomerCity, and PlantKey
+    const groupedData = customersData.reduce(async (accPromise, customer) => {
+      const acc = await accPromise;
+      const key = `${customer.CustomerCountry}-${customer.CustomerCity}-${customer.PlantKey}`;
+      if (!acc[key]) {
+        // Geocode the city to get latitude and longitude
+        const { lat, lon } = await geocodeCity(customer.CustomerCity, customer.CustomerCountry);
+        acc[key] = {
+          CustomerCountry: customer.CustomerCountry,
+          CustomerCity: customer.CustomerCity,
+          PlantKey: customer.PlantKey,
+          count: 0,
+          latitude: lat,
+          longitude: lon
+        };
+      }
+      acc[key].count++;
+      return acc;
+    }, {});
 
-  // Convert the grouped data into an array
-  const summarizedData = Object.values(groupedData);
+    // Convert the grouped data into an array
+    const summarizedData = Object.values(groupedData);
 
-  return summarizedData;
+    return summarizedData;
+  } catch (error) {
+    console.error("Error summarizing customers:", error);
+    throw error;
+  }
+}
+*/
+export async function summarizeCustomersByGroup() {
+  try {
+    const fetchedData = await fetchData();
+    const customersData = isolateData(fetchedData, "Customers.csv");
+
+    // Group by CustomerCountry, CustomerCity, and PlantKey
+    const groupedData = customersData.reduce((acc, customer) => {
+      const key = `Customer-${customer.CustomerCountry}-${customer.CustomerCity}-${customer.PlantKey}`;
+      if (!acc[key]) {
+        acc[key] = {
+          CustomerCountry: customer.CustomerCountry,
+          CustomerCity: customer.CustomerCity,
+          PlantKey: customer.PlantKey,
+          count: 0,
+        };
+      }
+      acc[key].count++;
+      return acc;
+    }, {});
+
+    // Convert the grouped data into an array
+    const summarizedData = Object.values(groupedData);
+
+    return summarizedData;
+  } catch (error) {
+    console.error("Error summarizing customers:", error);
+    throw error;
+  }
 }
 
 
-
 export async function summarizeInventoryByGroup() {
+  try {
+    const inventoryData = await fetchDataAndIsolateData("Inventory.csv");
 
-  const fetchedData = await fetchData();
-  const inventoryData = isolateData(fetchedData, "Inventory.csv");
-  // Group by MaterialPlantKey, SnapshotDate, and PlantKey and sum the quantities
-  const groupedData1 = inventoryData.reduce((acc, invent) => {
-    const key = `${invent.MaterialPlantKey}-${invent.SnapshotDate}-${invent.PlantKey}`;
-    if (!acc[key]) {
-      acc[key] = {
-        MaterialPlantKey: invent.MaterialPlantKey,
-        Date: invent.SnapshotDate,
-        PlantKey: invent.PlantKey,
-        GIQ: 0,
-        OSQ: 0,
-        ITQ: 0,
-        count: 0, // Initialize count to 0
-      };
-    }
-    acc[key].GIQ += invent.GrossInventoryQuantity;
-    acc[key].OSQ += invent.OnShelfInventoryQuantity;
-    acc[key].ITQ += invent.InTransitQuantity;
-    acc[key].count++; // Increment count for the group
-    return acc; // Make sure to return the accumulator object
-  }, {});
+    // Group by Material Key, SnapshotDate, and PlantKey and sum the quantities
+    const groupedData = inventoryData.reduce((acc, invent) => {
+      const key = `Inventory-${invent.MaterialKey}-${invent.SnapshotDate}-${invent.PlantKey}`;
+      if (!acc[key]) {
+        acc[key] = {
+          MaterialKey: invent.MaterialKey,
+          Date: invent.SnapshotDate,
+          PlantKey: invent.PlantKey,
+          GIQ: 0,
+          OSQ: 0,
+          ITQ: 0,
+          count: 0,
+        };
+      }
+      acc[key].GIQ += parseFloat(invent.GrossInventoryQuantity);
+      acc[key].OSQ += parseFloat(invent.OnShelfInventoryQuantity);
+      acc[key].ITQ += parseFloat(invent.InTransitQuantity);
+      acc[key].count++;
+      return acc;
+    }, {});
 
-  // Convert the grouped data into an array
-  const summarizedData1 = Object.values(groupedData1);
-
-  return summarizedData1; // Return the final summarized data array
+    // Convert the grouped data into an array
+    return Object.values(groupedData);
+  } catch (error) {
+    console.error("Error summarizing inventory:", error);
+    throw error;
+  }
 }
