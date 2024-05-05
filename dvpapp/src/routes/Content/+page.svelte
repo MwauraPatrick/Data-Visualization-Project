@@ -6,11 +6,24 @@
 	import TimeCost from './../../components/TimeCost/timecost.svelte';
 	
 	import { fetchData } from './../../components/data';
-    import { fetchData } from './../../components/dataprocessing.svelte';
+    import { summarizeCustomersByGroup,summarizeInventoryByGroup } from './../../components/dataprocessing';
 	let fetchedData = [];
     let summary = [];
+    let inventorySummary = [];
     let selectedFile = ''; // Store the selected file here
 
+    onMount(async () => {
+        try {
+            fetchedData = await fetchData();
+            summary = await summarizeCustomersByGroup();
+            inventorySummary = await summarizeInventoryByGroup();
+            console.log(summary);
+            console.log(inventorySummary);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+  
   onMount(async () => {
     try {
       fetchedData = await fetchData();
@@ -117,55 +130,67 @@
                 <p>This is the content for the {label} tab.</p>
                 <!-- Add plant customer demand component here -->
                 <!-- Your Svelte component template -->
-                <div>
-                    <h1>Customer Summary</h1>
-                    {#if summary.length > 0}
-                      {#each summary as { CustomerCountry, CustomerCity, PlantKey, count }}
-                        <div>
-                          <h3>{CustomerCountry} - {CustomerCity} - {PlantKey}</h3>
-                          <p>Count: {count}</p>
-                        </div>
-                      {/each}
-                    {:else}
-                      <p>No data available</p>
-                    {/if}
-                  </div>
-
                   
             {:else if id === "inventoryquantities"}
+
+            <h2>{label} Content</h2>
                 
                 <!-- Add inventory quantities component here -->
-                {#each fetchedData as { file, keys, data }}
-    {#if file === 'Materials.csv'}
-        <div>
-            <h3>{file}</h3>
-            <ul>
-                {#each keys as key}
-                    <li>{key}</li>
-                {/each}
-            </ul>
-            <table>
-                <thead>
-                    <tr>
-                        {#each keys as key}
-                            <th>{key}</th>
-                        {/each}
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each data as row}
-                        <tr>
-                            {#each keys as key}
-                                <td>{row[key]}</td>
-                            {/each}
-                        </tr>
-                    {/each}
-                </tbody>
-            </table>
-        </div>
-    {/if}
-{/each}
+             <div>
+  <h1>Customer Summary</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>City</th>
+        <th>Plant</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each summary as { CustomerCountry, CustomerCity, PlantKey, count }}
+        <tr>
+          <td>{CustomerCountry}</td>
+          <td>{CustomerCity}</td>
+          <td>{PlantKey}</td>
+          <td>{count}</td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>
 
+
+
+
+<div>
+    <h1>Inventory Summary</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Material Plant Key</th>
+          <th>Date</th>
+          <th>Plant Key</th>
+          <th>Gross Inventory Quantity</th>
+          <th>On Shelf Inventory Quantity</th>
+          <th>In Transit Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each summary as { MaterialPlantKey, Date, PlantKey, GIQ, OSQ, ITQ }}
+          <tr>
+            <td>{MaterialPlantKey}</td>
+            <td>{Date}</td>
+            <td>{PlantKey}</td>
+            <td>{GIQ}</td>
+            <td>{OSQ}</td>
+            <td>{ITQ}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+  
             {:else if id === "timecost"}
                 <h2>{label} Content</h2>
                 <div>
