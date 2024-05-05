@@ -1,4 +1,5 @@
 <script lang="ts">
+<<<<<<< HEAD
   import { fetchData } from './../../components/data';
   import LeafletMap from './../../components/Map/leafletMap.svelte';
   import TimeSeries from './../../components/Timeseries/timeseries.svelte';
@@ -36,8 +37,71 @@
     <title>Content</title>
     <meta name="description" content="Main content" />
     </svelte:head>
+=======
+	import LeafletMap from './../../components/Map/leafletMap.svelte';
+	import TimeSeries from './../../components/Timeseries/timeseries.svelte';
+	import Correlation from './../../components/Correlation/correlation.svelte';
+	import TimeCost from './../../components/TimeCost/timecost.svelte';
+	
+	import { fetchData } from './../../components/data';
+	let fetchedData = [];
 
-    <nav>
+
+	async function loadData() {
+  		fetchedData = await fetchData();
+	}
+
+	loadData();
+
+	import {
+  		writable
+	} from "svelte/store";
+
+	const tabs = [{
+    	id: "map",
+    	label: "Map"
+  	},
+  	{
+    	id: "timeSeries",
+    	label: "Time Series Plot"
+  	},
+  	{
+    	id: "correlations",
+    	label: "Correlations"
+  	},
+  	{
+    	id: "plantcustomerdemand",
+    	label: "Plant Customer Demand"
+  	},
+  	{
+    	id: "inventoryquantities",
+    	label: "Inventory Quantities"
+  	},
+  	{
+    	id: "timecost",
+    	label: "Time-Cost"
+  	},
+  	{
+    	id: "news",
+    	label: "News"
+  	},
+	];
+
+	const activeTab = writable("map"); // Default active tab
+
+	function setActiveTab(tabId: string) {
+  		activeTab.set(tabId);
+	}
+>>>>>>> c7bca21d06e3e8404772557e2f4bc0f47a0e65af
+
+	</script>
+
+	<svelte:head>
+    	<title>Content</title>
+    	<meta name="description" content="Main content" />
+    	</svelte:head>
+
+    	<nav>
         <ul role="tablist" class="tabs-container">
             {#each tabs as { id, label }}
             <li>
@@ -88,10 +152,12 @@
 							<div>
 							<TimeCost />
 							</div>
+					
 					{:else if id === "news"}
 							<h1>Data Content</h1>
 							<h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
 							<p>Please view the list below of the said datasets and the variables in them</p>
+<<<<<<< HEAD
     {#each tabs as { id, label }}
     {#if $activeTab === id}
     <section class="content">
@@ -129,6 +195,8 @@
         <h1>Data Content</h1>
         <h2>Here is our first news, we have been able to fetch 11 datasets for our application</h2>
         <p>Please view the list below of the said datasets and the variables in them</p>
+=======
+>>>>>>> c7bca21d06e3e8404772557e2f4bc0f47a0e65af
  {#each fetchedData as { file, keys }}
         <div>
             <h3>{file}</h3>
