@@ -99,7 +99,7 @@
 
             <h2>{label} Content</h2>
                 
-               <!--Add inventory quantities component here 
+               // Add inventory quantities component here 
                  <div>
   <h1>Customer Summary</h1>
   <table>
@@ -123,8 +123,7 @@
     </tbody>
   </table>
 </div>
-                
--->             
+                            
                 
             
 <div>
