@@ -99,31 +99,35 @@
 
             <h2>{label} Content</h2>
                 
-               // Add inventory quantities component here 
-                 <div>
-  <h1>Customer Summary</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Country</th>
-        <th>City</th>
-        <th>Plant</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each summary as { CustomerCountry, CustomerCity, PlantKey, count }}
-        <tr>
-          <td>{CustomerCountry}</td>
-          <td>{CustomerCity}</td>
-          <td>{PlantKey}</td>
-          <td>{count}</td>
-        </tr>
-      {/each}
-    </tbody>
-  </table>
-</div>
-                            
+               <!--Add inventory quantities component here --> 
+               <div>
+                <h1>Customer Summary</h1>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Country</th>
+                      <th>City</th>
+                      <th>Plant</th>
+                      <th>Count</th>
+                      <th>Latitude</th>
+                      <th>Longitude</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {#each summary as { CustomerCountry, CustomerCity, PlantKey, count, lat, lon }}
+                      <tr>
+                        <td>{CustomerCountry}</td>
+                        <td>{CustomerCity}</td>
+                        <td>{PlantKey}</td>
+                        <td>{count}</td>
+                        <td>{lat}</td>
+                        <td>{lon}</td>
+                      </tr>
+                    {/each}
+                  </tbody>
+                </table>
+              </div>
+              
                 
             
 <div>

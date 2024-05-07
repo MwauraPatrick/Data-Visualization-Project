@@ -15,7 +15,6 @@ async function fetchDataAndIsolateData(fileName) {
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-
 export async function summarizeInventoryByGroup() {
   try {
     const inventoryData = await fetchDataAndIsolateData("Inventory.csv");
@@ -49,12 +48,53 @@ export async function summarizeInventoryByGroup() {
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+export async function summarizeCustomersByGroup() {
+  try {
+    const fetchedData = await fetchData();
+    const customersData = isolateData(fetchedData, "Customers.csv");
+    const geocodedCustomersData = isolateData(fetchedData, "geocoded_customers.csv");
+
+    // Group by CustomerCountry, CustomerCity, and PlantKey
+    const groupedData = customersData.reduce((acc, customer) => {
+      const key = `Customer-${customer.CustomerCountry}-${customer.CustomerCity}-${customer.PlantKey}`;
+      if (!acc[key]) {
+        acc[key] = {
+          CustomerCountry: customer.CustomerCountry,
+          CustomerCity: customer.CustomerCity,
+          PlantKey: customer.PlantKey,
+          count: 0,
+          lat: null,
+          lon: null,
+        };
+      }
+      acc[key].count++;
+      return acc;
+    }, {});
+
+    // Update the grouped data with geocodes
+    geocodedCustomersData.forEach((geoCustomer) => {
+      const key = `Customer-${geoCustomer.CustomerCountry}-${geoCustomer.CustomerCity}-${geoCustomer.PlantKey}`;
+      if (groupedData[key]) {
+        groupedData[key].lat = geoCustomer.lat;
+        groupedData[key].lon = geoCustomer.lon;
+      }
+    });
+
+    // Convert the grouped data into an array
+    const summarizedData = Object.values(groupedData);
+
+    return summarizedData;
+  } catch (error) {
+    console.error("Error summarizing customers:", error);
+    throw error;
+  }
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export async function summarizeCustomersByGroup() {
+/*export async function summarizeCustomersByGroup() {
   try {
     const fetchedData = await fetchData();
     const customersData = isolateData(fetchedData, "Customers.csv");
@@ -83,3 +123,5 @@ export async function summarizeCustomersByGroup() {
     throw error;
   }
 }
+
+*/
