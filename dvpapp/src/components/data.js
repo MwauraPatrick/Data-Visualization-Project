@@ -1,4 +1,5 @@
 // data.js
+
 import Papa from "papaparse";
 
 export async function fetchData() {
@@ -13,11 +14,12 @@ export async function fetchData() {
     "Purchases.csv",
     "Sales.csv",
     "Vendors.csv",
+    "geocoded_customers.csv"
   ];
   const fetchedData = [];
 
-  for (const fileName of fileNames) {
-    const url = `https://raw.githubusercontent.com/JannesPeeters/suncharge/main/data/${fileName}`;
+  for (const fileName of fileNames) { 
+    const url = `https://raw.githubusercontent.com/MwauraPatrick/Data-Visualization-Project/main/dvpapp/src/lib/data/${fileName}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -47,7 +49,6 @@ export async function fetchData() {
   return fetchedData;
 }
 
-
 export function isolateData(fetchedData, fileName) {
   // Find the entry for the specified file name
   const dataEntry = fetchedData.find((entry) => entry.file === fileName);
@@ -58,4 +59,3 @@ export function isolateData(fetchedData, fileName) {
 
   return dataEntry.data;
 }
-
