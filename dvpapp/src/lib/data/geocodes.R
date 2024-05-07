@@ -3,7 +3,7 @@
 library(ggmap)
 
 # Set your Google Maps API key
-register_google(key = "AIzaSyCeNK1xwxd3L739ccim-uh_q32mpsm85kE")
+register_google(key = "")
 
 # Load the data
 Plants <- read.csv("Plants.csv")
