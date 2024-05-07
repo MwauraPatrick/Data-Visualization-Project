@@ -1,25 +1,43 @@
-
-// Leaflet map script
 <script>
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
   import { createMap } from './map.js';
-  import { summarizeCustomersByGroup } from './../dataprocessing.js';
-
+  import { summarizeCustomersByGroup ,leftJoinDataWithCoordinates } from './../dataprocessing.js';
+  
   let mapElement;
   let map;
+  let selectedData = "customers"; // Default selected data
+
+  async function updateMarkers() {
+    if (map) {
+      let data;
+      if (selectedData === "customers") {
+        data = await summarizeCustomersByGroup();
+      } else if (selectedData === "inventory") {
+        data = await leftJoinDataWithCoordinates(); // Assuming this function fetches and merges inventory data
+      }
+
+      // Clear existing markers
+      map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
+      // Add markers based on selected data
+      data.filter(item => item.count >= 5).forEach((item) => {
+        const { CustomerCity, count, lat, lon } = item;
+        L.marker([lat, lon]).addTo(map)
+          .bindPopup(`<b>${CustomerCity}</b><br>Customer Count: ${count}`)
+          .openPopup();
+      });
+    }
+  }
 
   onMount(async () => {
     if (browser) {
       map = await createMap(mapElement);
-      const customers = await summarizeCustomersByGroup();
-
-      customers.filter(customer => customer.count >= 5).forEach((customer) => {
-        const { CustomerCity, count, lat, lon } = customer;
-        L.marker([lat, lon]).addTo(map)
-          .bindPopup(`<b>${CustomerCity}</b><br>Customer No.: ${count}`)
-          .openPopup();
-      });
+      await updateMarkers();
     }
   });
 
@@ -31,21 +49,24 @@
   });
 </script>
 
-
 <main>
   <div bind:this={mapElement}></div>
+  <select bind:value={selectedData} on:change={updateMarkers}>
+    <option value="customers">Customers</option>
+    <option value="inventory">Inventory</option>
+  </select>
 </main>
 
 <style>
   @import 'leaflet/dist/leaflet.css';
   main {
     display: flex;
-    justify-content: right;
+    flex-direction: column;
     align-items: center;
-    margin: 0px;
+    margin-top: 20px;
   }
   main div {
-    height: 800px; /* Adjust height as needed */
-    width: 800px; /* Adjust width as needed */
+    height: 600px;
+    width: 800px;
   }
 </style>

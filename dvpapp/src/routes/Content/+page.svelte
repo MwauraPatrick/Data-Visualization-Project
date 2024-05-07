@@ -11,7 +11,9 @@
   let fetchedData = [];
   let summary = [];
   let inventorySummary = [];
+  let forecastSummary = [];
   let selectedFile = 'Customers.csv'; // Default selected file
+  let mergedData = [];
 
   onMount(async () => {
       try {
@@ -94,6 +96,43 @@
                 <p>This is the content for the {label} tab.</p>
                 <!-- Add plant customer demand component here -->
                 <!-- Your Svelte component template -->
+                <div>
+                  <h1>Merged Data Summary</h1>
+
+                  {#if mergedData.length > 0}
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>Date</th>
+                              <th>Plant Key</th>
+                              <th>GIQ</th>
+                              <th>OSQ</th>
+                              <th>ITQ</th>
+                              <th>FQ</th>
+                              <th>Latitude</th>
+                              <th>Longitude</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {#each mergedData as { Date, PlantKey, GIQ, OSQ, ITQ, FQ, lat, lon }}
+                          <tr>
+                              <td>{Date}</td>
+                              <td>{PlantKey}</td>
+                              <td>{GIQ}</td>
+                              <td>{OSQ}</td>
+                              <td>{ITQ}</td>
+                              <td>{FQ}</td>
+                              <td>{lat}</td>
+                              <td>{lon}</td>
+                          </tr>
+                          {/each}
+                      </tbody>
+                  </table>
+                  {:else}
+  <p>No data available.</p>
+{/if}
+              </div>
+              
                   
             {:else if id === "inventoryquantities"}
 
@@ -135,21 +174,21 @@
     <table>
       <thead>
         <tr>
+          <th>Date</th>
           <th>Plant Key</th>
           <th>GIQ</th>
           <th>OSQ</th>
           <th>ITQ</th>
-          <th>Date</th>
         </tr>
       </thead>
       <tbody>
         {#each inventorySummary as { Date, PlantKey, GIQ, OSQ, ITQ }}
           <tr>
+            <td>{Date}</td>
             <td>{PlantKey}</td>
             <td>{GIQ}</td>
             <td>{OSQ}</td>
             <td>{ITQ}</td>
-            <td>{Date}</td>
           </tr>
         {/each}
       </tbody>

@@ -8,6 +8,7 @@ export async function fetchData() {
     "Customers.csv",
     "Forecast.csv",
     "Inventory.csv",
+    "Plants.csv",
     "MaterialPlantRelation.csv",
     "Materials.csv",
     "geocoded_plants.csv",
