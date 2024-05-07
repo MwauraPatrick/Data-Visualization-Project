@@ -21,10 +21,9 @@ export async function summarizeInventoryByGroup() {
 
     // Group by Material Key, SnapshotDate, and PlantKey and sum the quantities
     const groupedData = inventoryData.reduce((acc, invent) => {
-      const key = `Inventory-${invent.MaterialKey}-${invent.SnapshotDate}-${invent.PlantKey}`;
+      const key = `Inventory-${invent.SnapshotDate}-${invent.PlantKey}`;
       if (!acc[key]) {
         acc[key] = {
-          MaterialKey: invent.MaterialKey,
           Date: invent.SnapshotDate,
           PlantKey: invent.PlantKey,
           GIQ: 0,

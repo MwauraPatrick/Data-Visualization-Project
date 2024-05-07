@@ -135,7 +135,6 @@
     <table>
       <thead>
         <tr>
-          <th>Material Key</th>
           <th>Plant Key</th>
           <th>GIQ</th>
           <th>OSQ</th>
@@ -144,9 +143,8 @@
         </tr>
       </thead>
       <tbody>
-        {#each inventorySummary as { MaterialKey, Date, PlantKey, GIQ, OSQ, ITQ }}
+        {#each inventorySummary as { Date, PlantKey, GIQ, OSQ, ITQ }}
           <tr>
-            <td>{MaterialKey}</td>
             <td>{PlantKey}</td>
             <td>{GIQ}</td>
             <td>{OSQ}</td>
