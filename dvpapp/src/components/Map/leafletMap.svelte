@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
   import { createMap } from './map.js';
-  import { summarizeCustomersByGroup ,leftJoinDataWithCoordinates } from './../dataprocessing.js';
+  import { summarizeCustomersByGroup ,fullJoinDataWithCoordinates } from './../dataprocessing.js';
   
   let mapElement;
   let map;
@@ -14,7 +14,7 @@
       if (selectedData === "customers") {
         data = await summarizeCustomersByGroup();
       } else if (selectedData === "inventory") {
-        data = await leftJoinDataWithCoordinates(); // Assuming this function fetches and merges inventory data
+        data = await fullJoinDataWithCoordinates(); // Assuming this function fetches and merges inventory data
       }
 
       // Clear existing markers

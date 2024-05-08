@@ -1,5 +1,6 @@
 // dataProcessing.js
 
+
 import { fetchData, isolateData } from "./data"; // Adjust the path to match your actual file structure
 
 
@@ -105,45 +106,67 @@ export async function summarizeForecastByGroup() {
         acc[key] = {
           Date: fore.RequestedDeliveryMonth,
           PlantKey: fore.PlantKey,
-          FQ: 0,
+          FQ: 0, // Ensure FQ is initialized
           count: 0,
         };
       }
+      
+      // Log the current value of FQ before updating
+      console.log("Current FQ:", acc[key].FQ);
+      
       acc[key].FQ += parseFloat(fore.Quantity);
       acc[key].count++;
+
+      // Log the updated value of FQ after updating
+      console.log("Updated FQ:", acc[key].FQ);
+
       return acc;
     }, {});
 
     // Convert the grouped data into an array
-    return Object.values(groupedforeData);
+    const summarizedData = Object.values(groupedforeData);
+    console.log("Summarized Forecast Data:", summarizedData);
+    return summarizedData;
   } catch (error) {
-    console.error("Error summarizing inventory:", error);
+    console.error("Error summarizing forecast:", error);
     throw error;
   }
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////
-
-export async function leftJoinDataWithCoordinates() {
+export async function fullJoinDataWithCoordinates() {
   try {
     const inventorySummaries = await summarizeInventoryByGroup();
     const forecastSummaries = await summarizeForecastByGroup();
-    const plantData = await fetchDataAndIsolateData("Plants.csv");
+    const plantData = await fetchDataAndIsolateData("geocoded_plants.csv");
 
-    // Create a map of PlantKey to coordinates
     const plantCoordinates = plantData.reduce((acc, plant) => {
       acc[plant.PlantKey] = { lat: plant.lat, lon: plant.lon };
       return acc;
     }, {});
 
-    // Merge the inventory and forecast datasets
-    const mergedData = inventorySummaries.map((inventory) => {
-      const matchingForecast = forecastSummaries.find((forecast) => {
-        return inventory.Date === forecast.Date && inventory.PlantKey === forecast.PlantKey;
-      });
-      return { ...inventory, ...matchingForecast, ...plantCoordinates[inventory.PlantKey] };
-    });
+    const allDates = new Set([...inventorySummaries.map(item => item.Date), ...forecastSummaries.map(item => item.Date)]);
+    const allPlantKeys = new Set([...inventorySummaries.map(item => item.PlantKey), ...forecastSummaries.map(item => item.PlantKey)]);
+
+    const mergedData = [];
+    for (const date of allDates) {
+      for (const plantKey of allPlantKeys) {
+        const inventory = inventorySummaries.find(item => item.Date === date && item.PlantKey === plantKey);
+        const forecast = forecastSummaries.find(item => item.Date === date && item.PlantKey === plantKey);
+
+        const mergedItem = {
+          Date: date,
+          PlantKey: plantKey,
+          GIQ: inventory?.GIQ || "NA",
+          OSQ: inventory?.OSQ || "NA",
+          ITQ: inventory?.ITQ || "NA",
+          FQ: forecast?.FQ || "NA",
+          ...plantCoordinates[plantKey]
+        };
+
+        mergedData.push(mergedItem);
+      }
+    }
 
     return mergedData;
   } catch (error) {

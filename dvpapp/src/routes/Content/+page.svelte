@@ -6,12 +6,11 @@
   import TimeCost from './../../components/TimeCost/timecost.svelte';
 
   import { fetchData } from './../../components/data';
-  import { summarizeCustomersByGroup, summarizeInventoryByGroup } from './../../components/dataprocessing';
+  import { summarizeCustomersByGroup, summarizeInventoryByGroup, fullJoinDataWithCoordinates } from './../../components/dataprocessing';
 
   let fetchedData = [];
   let summary = [];
   let inventorySummary = [];
-  let forecastSummary = [];
   let selectedFile = 'Customers.csv'; // Default selected file
   let mergedData = [];
 
@@ -20,8 +19,10 @@
           fetchedData = await fetchData();
           summary = await summarizeCustomersByGroup();
           inventorySummary = await summarizeInventoryByGroup();
+          mergedData = await fullJoinDataWithCoordinates() 
           console.log(summary);
           console.log(inventorySummary);
+          console.log(mergedData);
       } catch (error) {
           console.error('Error:', error);
       }

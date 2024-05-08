@@ -11,10 +11,10 @@ export async function fetchData() {
     "Plants.csv",
     "MaterialPlantRelation.csv",
     "Materials.csv",
-    "geocoded_plants.csv",
     "Purchases.csv",
     "Sales.csv",
     "Vendors.csv",
+    "geocoded_plants.csv",
     "geocoded_customers.csv"
   ];
   const fetchedData = [];
