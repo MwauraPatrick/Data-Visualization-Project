@@ -79,7 +79,7 @@
             {#if id === "map"}
                 <h2>{label} Content</h2>
                 <div>
-                    <p>This is the content for the {label} tab.</p>
+                    <h1>Inventory Orders Sales by Country</h1>
                     <LeafletMap />
                 </div>
             {:else if id === "timeSeries"}
