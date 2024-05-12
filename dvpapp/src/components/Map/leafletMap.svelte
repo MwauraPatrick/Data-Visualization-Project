@@ -9,52 +9,54 @@
   let showCustomers = true;
   let showInventory = false;
   let showForecast = false;
-async function updateMarkers() {
-  if (map) {
-    let data = [];
+  let startDate = '';
+  let endDate = '';
 
-    if (showCustomers) {
-      const customersData = await summarizeCustomersByGroup();
-      data.push(...customersData);
-    }
+  async function updateMarkers() {
+    if (map) {
+      let data = [];
 
-    if (showInventory) {
-      const inventoryData = await summarizeInventoryByGroup();
-      data.push(...inventoryData);
-    }
-
-    if (showForecast) {
-      const forecastData = await summarizeForecastByGroup();
-      data.push(...forecastData);
-    }
-
-    // Clear existing markers
-    map.eachLayer((layer) => {
-      if (layer instanceof L.Marker) {
-        map.removeLayer(layer);
+      if (showCustomers) {
+        const customersData = await summarizeCustomersByGroup();
+        data.push(...customersData);
       }
-    });
-
-    // Add markers based on selected data
-    data.filter(item => item.count >= 5).forEach((item) => {
-      const { CustomerCity, count, lat, lon } = item;
-      let popupContent = `<b>${CustomerCity}</b><br>Customer Count: ${count}`;
 
       if (showInventory) {
-        popupContent += `<br>Gross Inventory Quantity: ${item.GIQ}<br>On Shelf Inventory Quantity: ${item.OSQ}<br>In Transit Quantity: ${item.ITQ}`;
+        const inventoryData = await summarizeInventoryByGroup(startDate, endDate);
+        data.push(...inventoryData);
       }
 
       if (showForecast) {
-        popupContent += `<br>Forecast Quantity: ${item.FQ}`;
+        const forecastData = await summarizeForecastByGroup(startDate, endDate);
+        data.push(...forecastData);
       }
 
-      L.marker([lat, lon]).addTo(map)
-        .bindPopup(popupContent)
-        .openPopup();
-    });
-  }
-}
+      // Clear existing markers
+      map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.removeLayer(layer);
+        }
+      });
 
+      // Add markers based on selected data
+      data.filter(item => item.count >= 5).forEach((item) => {
+        const { CustomerCity, count, lat, lon } = item;
+        let popupContent = `<b>${CustomerCity}</b><br>Customer Count: ${count}`;
+
+        if (showInventory) {
+          popupContent += `<br>Gross Inventory Quantity: ${item.GIQ}<br>On Shelf Inventory Quantity: ${item.OSQ}<br>In Transit Quantity: ${item.ITQ}`;
+        }
+
+        if (showForecast) {
+          popupContent += `<br>Forecast Quantity: ${item.FQ}`;
+        }
+
+        L.marker([lat, lon]).addTo(map)
+          .bindPopup(popupContent)
+          .openPopup();
+      });
+    }
+  }
 
   onMount(async () => {
     if (browser) {
@@ -71,18 +73,24 @@ async function updateMarkers() {
   });
 </script>
 
+
 <main>
-  <label>
-    <input type="checkbox" bind:checked={showCustomers} on:change={updateMarkers} /> Customers
-  </label>
-  <label>
-    <input type="checkbox" bind:checked={showInventory} on:change={updateMarkers} /> Inventory
-  </label>
-  <label>
-    <input type="checkbox" bind:checked={showForecast} on:change={updateMarkers} /> Forecast
-  </label>
+  <div class="input-group">
+    <label>
+      <input type="checkbox" bind:checked={showCustomers} on:change={updateMarkers} /> Customers
+    </label>
+    <label>
+      <input type="checkbox" bind:checked={showForecast} on:change={updateMarkers} /> Forecast
+    </label>
+    <label>
+      <input type="checkbox" bind:checked={showInventory} on:change={updateMarkers} /> Inventory
+    </label>
+    <label for="startDate">Start Date:</label>
+    <input id="startDate" type="date" bind:value={startDate} on:change={updateMarkers} />
+    <label for="endDate">End Date:</label>
+    <input id="endDate" type="date" bind:value={endDate} on:change={updateMarkers} />
+  </div>
   <div bind:this={mapElement}></div>
-  
 </main>
 
 <style>
@@ -91,8 +99,22 @@ async function updateMarkers() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 0;
+    padding: 0;
   }
+
+  .input-group {
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    margin-bottom: 10px;
+  }
+
+  .input-group label {
+    margin-right: 10px;
+  }
+
   main div {
     height: 600px;
     width: 800px;

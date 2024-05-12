@@ -77,7 +77,6 @@
     {#if $activeTab === id}
         <section class="content">
             {#if id === "map"}
-                <h2>{label} Content</h2>
                 <div>
                     <h1>Inventory Orders Sales by Country</h1>
                     <LeafletMap />
