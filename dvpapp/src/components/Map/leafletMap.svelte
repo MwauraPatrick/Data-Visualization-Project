@@ -21,13 +21,15 @@
         data.push(...customersData);
       }
 
+      let inventoryData = [];
       if (showInventory) {
-        const inventoryData = await summarizeInventoryByGroup(startDate, endDate);
+        inventoryData = await summarizeInventoryByGroup(startDate, endDate);
         data.push(...inventoryData);
       }
 
+      let forecastData = [];
       if (showForecast) {
-        const forecastData = await summarizeForecastByGroup(startDate, endDate);
+        forecastData = await summarizeForecastByGroup(startDate, endDate);
         data.push(...forecastData);
       }
 
@@ -38,17 +40,25 @@
         }
       });
 
-      // Add markers based on selected data
+      // markers based on selected data
       data.filter(item => item.count >= 5).forEach((item) => {
         const { CustomerCity, count, lat, lon } = item;
         let popupContent = `<b>${CustomerCity}</b><br>Customer Count: ${count}`;
 
         if (showInventory) {
-          popupContent += `<br>Gross Inventory Quantity: ${item.GIQ}<br>On Shelf Inventory Quantity: ${item.OSQ}<br>In Transit Quantity: ${item.ITQ}`;
+          inventoryData.forEach((inventoryItem) => {
+            if (inventoryItem.PlantKey === item.PlantKey) {
+              popupContent += `<br>Gross Inventory Quantity: ${inventoryItem.GIQ}<br>On Shelf Inventory Quantity: ${inventoryItem.OSQ}<br>In Transit Quantity: ${inventoryItem.ITQ}`;
+            }
+          });
         }
 
         if (showForecast) {
-          popupContent += `<br>Forecast Quantity: ${item.FQ}`;
+          forecastData.forEach((forecastItem) => {
+            if (forecastItem.PlantKey === item.PlantKey) {
+              popupContent += `<br>Forecast Quantity: ${forecastItem.FQ}`;
+            }
+          });
         }
 
         L.marker([lat, lon]).addTo(map)
@@ -57,6 +67,7 @@
       });
     }
   }
+
 
   onMount(async () => {
     if (browser) {
@@ -72,7 +83,6 @@
     }
   });
 </script>
-
 
 <main>
   <div class="input-group">

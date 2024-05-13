@@ -1,7 +1,7 @@
 // dataProcessing.js
 
 
-import { fetchData, isolateData } from "./data"; // Adjust the path to match your actual file structure
+import { fetchData, isolateData } from "./data"; 
 
 
 async function fetchDataAndIsolateData(fileName) {
@@ -39,7 +39,7 @@ export async function summarizeCustomersByGroup() {
       return acc;
     }, {});
 
-    // Update the grouped data with geocodes
+    // grouped data with geocodes
     geocodedCustomersData.forEach((geoCustomer) => {
       const key = `Customer-${geoCustomer.CustomerCountry}-${geoCustomer.CustomerCity}-${geoCustomer.PlantKey}`;
       if (groupedData[key]) {
@@ -48,7 +48,7 @@ export async function summarizeCustomersByGroup() {
       }
     });
 
-    // Convert the grouped data into an array
+    // grouped data into an array
     const summarizedData = Object.values(groupedData);
 
     return summarizedData;
@@ -94,7 +94,7 @@ export async function summarizeInventoryByGroup() {
       }
     });
 
-    // Convert the grouped data into an array
+    // grouped data into an array
     return Object.values(groupedData);
   } catch (error) {
     console.error("Error summarizing inventory:", error);
@@ -116,7 +116,7 @@ export async function summarizeForecastByGroup() {
         acc[key] = {
           Date: fore.RequestedDeliveryMonth,
           PlantKey: fore.PlantKey,
-          FQ: 0, // Ensure FQ is initialized
+          FQ: 0, // FQ is initialized
           count: 0,
         };
       }
@@ -143,10 +143,6 @@ export async function summarizeForecastByGroup() {
     throw error;
   }
 }
-
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 export async function fullJoinDataWithCoordinates() {
