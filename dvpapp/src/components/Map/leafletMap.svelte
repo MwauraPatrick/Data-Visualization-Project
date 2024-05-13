@@ -112,6 +112,8 @@
   }
 
   fetchDateOptions(); // Fetch date options on component mount
+
+  
 </script>
 
 <main>
