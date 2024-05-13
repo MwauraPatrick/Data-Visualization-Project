@@ -9,8 +9,8 @@
   let showCustomers = true;
   let showInventory = false;
   let showForecast = false;
-  let startDate = '';
-  let endDate = '';
+  let startDate = '2024-01-01'; 
+  let endDate = '2024-01-01'; 
 
   async function updateMarkers() {
     if (map) {

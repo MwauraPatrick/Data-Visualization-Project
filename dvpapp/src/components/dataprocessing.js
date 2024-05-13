@@ -64,6 +64,7 @@ export async function summarizeCustomersByGroup() {
 export async function summarizeInventoryByGroup() {
   try {
     const inventoryData = await fetchDataAndIsolateData("Inventory.csv");
+    const customersData = await fetchDataAndIsolateData("Customers.csv");
 
     // Group by Material Key, SnapshotDate, and PlantKey and sum the quantities
     const groupedData = inventoryData.reduce((acc, invent) => {
@@ -85,6 +86,14 @@ export async function summarizeInventoryByGroup() {
       return acc;
     }, {});
 
+    // Match PlantKey from customersData
+    customersData.forEach((customer) => {
+      const key = `Inventory-${customer.PlantKey}`;
+      if (groupedData[key]) {
+        groupedData[key].CustomerCity = customer.CustomerCity;
+      }
+    });
+
     // Convert the grouped data into an array
     return Object.values(groupedData);
   } catch (error) {
@@ -92,12 +101,13 @@ export async function summarizeInventoryByGroup() {
     throw error;
   }
 }
+////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export async function summarizeForecastByGroup() {
   try {
     const forecastData = await fetchDataAndIsolateData("Forecast.csv");
+    const customersData = await fetchDataAndIsolateData("Customers.csv");
 
     // Group by RequestedDeliveryMonth PlantKey Quantity
     const groupedforeData = forecastData.reduce((acc, fore) => {
@@ -110,15 +120,16 @@ export async function summarizeForecastByGroup() {
           count: 0,
         };
       }
-      
-      // Log the current value of FQ before updating
-      console.log("Current FQ:", acc[key].FQ);
-      
+
+      // Match PlantKey from customersData
+      customersData.forEach((customer) => {
+        if (customer.PlantKey === fore.PlantKey) {
+          acc[key].CustomerCity = customer.CustomerCity;
+        }
+      });
+
       acc[key].FQ += parseFloat(fore.Quantity);
       acc[key].count++;
-
-      // Log the updated value of FQ after updating
-      console.log("Updated FQ:", acc[key].FQ);
 
       return acc;
     }, {});
@@ -133,7 +144,7 @@ export async function summarizeForecastByGroup() {
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 

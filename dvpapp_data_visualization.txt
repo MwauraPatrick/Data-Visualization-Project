@@ -19,5 +19,14 @@ Inventroy.csv
 1. Group by material key, snapshort date, quantieties (Gross,onshelf,transit) and total
 2. Group by plant key , snapshot date,quantity(Gross,Onself,transit) total , forcasted , customer count
 
+Locations are defined by plant keys.
 
+Stocks to display on the map
+Locations for the PlantKeys are in the geocoded_plants.csv (lon	lat)
+Gross inventory (from Inventory.csv, Grouped by SnapshotDate and PlantKey)
+Onshelf   (from Inventory.csv, Grouped by SnapshotDate and PlantKey)
+InTransit  (from Inventory.csv, Grouped by SnapshotDate and PlantKey)
+Quantity (from Forecast.csv, grouped by RequestdDeliveryMonth and PlantKey)
+PurchaseOrderQuantity (purchases, grouped by PurchaseOrderCreationDate and PlantKey)
 
+The plants should be the joining key and the dates
