@@ -61,6 +61,8 @@ export async function summarizeCustomersByGroup() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import moment from 'moment';
+
 export async function summarizeInventoryByGroup() {
   try {
     const inventoryData = await fetchDataAndIsolateData("Inventory.csv");
@@ -71,7 +73,7 @@ export async function summarizeInventoryByGroup() {
       const key = `Inventory-${invent.SnapshotDate}-${invent.PlantKey}`;
       if (!acc[key]) {
         acc[key] = {
-          Date: invent.SnapshotDate,
+          Date: moment(invent.SnapshotDate, "YYYY-MM-DD").format("DD/MM/YYYY"),
           PlantKey: invent.PlantKey,
           GIQ: 0,
           OSQ: 0,
@@ -101,6 +103,7 @@ export async function summarizeInventoryByGroup() {
     throw error;
   }
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 

@@ -9,8 +9,8 @@
   let showCustomers = true;
   let showInventory = false;
   let showForecast = false;
-  let startDate = '2024-01-01'; 
-  let endDate = '2024-01-01'; 
+  let startDate = '31/01/2022'; 
+  let endDate = '01/01/2023'; 
 
   async function updateMarkers() {
     if (map) {
@@ -42,24 +42,37 @@
 
       // markers based on selected data
       data.filter(item => item.count >= 5).forEach((item) => {
-        const { CustomerCity, count, lat, lon } = item;
-        let popupContent = `<b>${CustomerCity}</b><br>Customer Count: ${count}`;
+        const { CustomerCity,PlantKey ,count, lat, lon } = item;
+        let popupContent = `<b>${CustomerCity}</b><br>Plant Key: ${PlantKey}</b><br>Customer Count: ${count}`;
 
         if (showInventory) {
-          inventoryData.forEach((inventoryItem) => {
-            if (inventoryItem.PlantKey === item.PlantKey) {
-              popupContent += `<br>Gross Inventory Quantity: ${inventoryItem.GIQ}<br>On Shelf Inventory Quantity: ${inventoryItem.OSQ}<br>In Transit Quantity: ${inventoryItem.ITQ}`;
-            }
-          });
-        }
+  const inventoryItemsInRange = inventoryData.filter((inventoryItem) => {
+    return inventoryItem.PlantKey === item.PlantKey &&
+           inventoryItem.Date >= startDate && 
+           inventoryItem.Date <= endDate;
+  });
 
-        if (showForecast) {
-          forecastData.forEach((forecastItem) => {
-            if (forecastItem.PlantKey === item.PlantKey) {
-              popupContent += `<br>Forecast Quantity: ${forecastItem.FQ}`;
-            }
-          });
-        }
+  if (inventoryItemsInRange.length > 0) {
+    const latestInventoryItem = inventoryItemsInRange.reduce((prev, current) => (prev.Date > current.Date) ? prev : current);
+
+    popupContent += `<br>Date: ${latestInventoryItem.Date}<br>Gross Inventory Quantity: ${latestInventoryItem.GIQ}<br>On Shelf Inventory Quantity: ${latestInventoryItem.OSQ}<br>In Transit Quantity: ${latestInventoryItem.ITQ}`;
+  }
+}
+
+if (showForecast) {
+  const forecastItemsInRange = forecastData.filter((forecastItem) => {
+    return forecastItem.PlantKey === item.PlantKey &&
+           forecastItem.Date >= startDate && 
+           forecastItem.Date <= endDate;
+  });
+
+  if (forecastItemsInRange.length > 0) {
+    const latestForecastItem = forecastItemsInRange.reduce((prev, current) => (prev.Date > current.Date) ? prev : current);
+
+    popupContent += `<br>Date: ${latestForecastItem.Date}<br>Forecast Quantity: ${latestForecastItem.FQ}`;
+  }
+}
+
 
         L.marker([lat, lon]).addTo(map)
           .bindPopup(popupContent)
