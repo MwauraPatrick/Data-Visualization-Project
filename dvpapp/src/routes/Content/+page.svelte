@@ -82,7 +82,6 @@
                     <LeafletMap />
                 </div>
             {:else if id === "timeSeries"}
-                <h2>{label} Content</h2>
                 <div>
                     <TimeSeries />
                 </div>

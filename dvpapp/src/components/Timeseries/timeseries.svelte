@@ -154,12 +154,19 @@
             data: {
                 labels: filteredData.labels,
                 datasets: [{
-                label: "Time Series",
-                data: filteredData.quantity,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                borderWidth: 2
-            }]
+                    label: "Quantity",
+                    data: filteredData.quantity,
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Dataset 2',
+                    data: [5, 15, 20, 10, 25],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                }
+            ]
         },
         options: {
             plugins: {
@@ -200,15 +207,14 @@
 
   onMount(() => createChart()); // Create the chart on component mount
 </script>
+<div class = "container">
+    <div class = "inputs">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" value="2024-03-01" on:change={() => { startDate = formatDate(new Date(event.target.value)); updateChartDate(); }}>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate"  value="2024-03-10" on:change={() => { endDate = formatDate(new Date(event.target.value)); updateChartDate(); }}>
+    </div>
 
-<div>
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" value="2024-03-01" on:change={() => { startDate = formatDate(new Date(event.target.value)); updateChartDate(); }}>
-  </div>
-  
-  <div>
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate"  value="2024-03-10" on:change={() => { endDate = formatDate(new Date(event.target.value)); updateChartDate(); }}>
-  </div>
+    <canvas bind:this={chart} id = "TimeSeries" width=200 height=50 />
+</div>
 
-<canvas bind:this={chart} id = "TimeSeries" width={50} height={50} />
