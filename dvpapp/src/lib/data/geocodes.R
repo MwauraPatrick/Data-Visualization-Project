@@ -28,7 +28,7 @@ write.csv(geocoded_plants, "geocoded_plants.csv", row.names = FALSE)
 
 
 # Install and load required packages
-install.packages("geojsonio")
+# install.packages("geojsonio")
 library(geojsonio)
 
 # Load country boundaries data
