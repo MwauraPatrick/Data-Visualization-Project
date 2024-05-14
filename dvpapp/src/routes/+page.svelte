@@ -16,7 +16,7 @@
 				<img src={welcome_fallback} alt="Welcome" />
 			</picture>
 		</span>
-		Welcome to your new Supply Chain Dashboard
+		Welcome to Your New Supply Chain Dashboard
 	</h1>
 
 	<main />

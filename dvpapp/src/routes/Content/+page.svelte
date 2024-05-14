@@ -4,7 +4,7 @@
   import TimeSeries from './../../components/Timeseries/timeseries.svelte';
   import Correlation from './../../components/Correlation/correlation.svelte';
   import TimeCost from './../../components/TimeCost/timecost.svelte';
-
+  import Inventory  from '../../components/Inventory/Inventory.svelte';
   import { fetchData } from './../../components/data';
   import { summarizeCustomersByGroup, summarizeInventoryByGroup, fullJoinDataWithCoordinates } from './../../components/dataprocessing';
 
@@ -136,8 +136,9 @@
             {:else if id === "inventoryquantities"}
 
             <h2>{label} Content</h2>
-                
-               <!--Add inventory quantities component here --> 
+            <div>
+              <Inventory />
+            </div>
                <div>
                 <h1>Customer Summary</h1>
                 <table>
