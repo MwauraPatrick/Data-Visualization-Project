@@ -128,73 +128,13 @@
                       </tbody>
                   </table>
                   {:else}
-  <p>No data available.</p>
-{/if}
-              </div>
-              
-                  
+    <p>No data available.</p>
+      {/if}
+              </div> 
             {:else if id === "inventoryquantities"}
-
-            <h2>{label} Content</h2>
-            <div>
-              <Inventory />
-            </div>
-               <div>
-                <h1>Customer Summary</h1>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Country</th>
-                      <th>City</th>
-                      <th>Plant</th>
-                      <th>Count</th>
-                      <th>Latitude</th>
-                      <th>Longitude</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {#each summary as { CustomerCountry, CustomerCity, PlantKey, count, lat, lon }}
-                      <tr>
-                        <td>{CustomerCountry}</td>
-                        <td>{CustomerCity}</td>
-                        <td>{PlantKey}</td>
-                        <td>{count}</td>
-                        <td>{lat}</td>
-                        <td>{lon}</td>
-                      </tr>
-                    {/each}
-                  </tbody>
-                </table>
+              <div>
+                <Inventory />
               </div>
-              
-                
-            
-<div>
-    <h1>Inventory Summary</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Plant Key</th>
-          <th>GIQ</th>
-          <th>OSQ</th>
-          <th>ITQ</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each inventorySummary as { Date, PlantKey, GIQ, OSQ, ITQ }}
-          <tr>
-            <td>{Date}</td>
-            <td>{PlantKey}</td>
-            <td>{GIQ}</td>
-            <td>{OSQ}</td>
-            <td>{ITQ}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-  
             {:else if id === "timecost"}
                 <h2>{label} Content</h2>
                 <div>
