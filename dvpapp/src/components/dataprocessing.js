@@ -139,7 +139,7 @@ export async function summarizeForecastByGroup() {
 
     // Convert the grouped data into an array
     const summarizedData = Object.values(groupedforeData);
-    console.log("Summarized Forecast Data:", summarizedData);
+    //console.log("Summarized Forecast Data:", summarizedData);
     return summarizedData;
   } catch (error) {
     console.error("Error summarizing forecast:", error);
