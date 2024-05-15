@@ -186,8 +186,8 @@
   }
 
   main div {
-    height: 800px;
-    width: 800px;
+    height: 600px;
+    width: 100%;
   }
 
   #map {
