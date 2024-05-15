@@ -20,9 +20,9 @@
           summary = await summarizeCustomersByGroup();
           inventorySummary = await summarizeInventoryByGroup();
           mergedData = await fullJoinDataWithCoordinates() 
-          console.log(summary);
-          console.log(inventorySummary);
-          console.log(mergedData);
+          //console.log(summary);
+          //console.log(inventorySummary);
+          //console.log(mergedData);
       } catch (error) {
           console.error('Error:', error);
       }
