@@ -1,4 +1,5 @@
 <script>
+  import L from 'leaflet';
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
   import { createMap } from './map.js';

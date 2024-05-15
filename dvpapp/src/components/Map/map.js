@@ -1,6 +1,7 @@
 //map.js
 import 'leaflet/dist/leaflet.css';
 
+
 export async function createMap(mapElement) {
   try {
     const leaflet = await import('leaflet');
