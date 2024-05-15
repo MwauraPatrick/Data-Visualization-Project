@@ -1,16 +1,24 @@
 <script>
   import L from 'leaflet';
   import { onMount, onDestroy } from 'svelte';
+  import moment from 'moment';
   import { browser } from '$app/environment';
   import { createMap } from './map.js';
   import { summarizeCustomersByGroup, summarizeInventoryByGroup, summarizeForecastByGroup } from './../dataprocessing.js';
+
+
+  
+// Path to the raw image file on GitHub
+const locationIconUrl = 'https://raw.githubusercontent.com/MwauraPatrick/Data-Visualization-Project/main/dvpapp/static/pin.png';
+
+
 
   let mapElement;
   let map;
   let showCustomers = true;
   let showInventory = false;
   let showForecast = false;
-  let selectedDate = '31/01/2022'; // Default date
+  let selectedDate = moment('2022-01-31'); // Default date
   let dateOptions = []; // Array to hold date options
 
   async function updateMarkers() {
@@ -72,7 +80,18 @@
           }
         }
 
-        L.marker([lat, lon]).addTo(map)
+        // Define a custom icon
+const customIcon = L.icon({
+    iconUrl: locationIconUrl,
+    iconSize: [10, 20],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28]
+});
+
+// Use the custom icon for markers
+L.marker([lat, lon], { icon: customIcon }).addTo(map)
+
           .bindPopup(popupContent)
           .openPopup();
       });
@@ -89,7 +108,7 @@
         onAdd: function(map) {
           const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
           div.innerHTML = 'Reset';
-          div.style.backgroundColor = 'white';
+          div.style.backgroundColor = 'brown';
           div.style.borderRadius = '4px';
           div.style.padding = '5px 10px';
           div.style.cursor = 'pointer';
