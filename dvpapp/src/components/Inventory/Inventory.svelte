@@ -128,7 +128,7 @@
         if (canvas){
             ctx = chart.getContext('2d');
             const data = {
-            labels: ['Gross', 'On Shelf', 'In Transit'],
+            labels: ['On Shelf', 'In Transit'],
             datasets: [
             {
                 data: [data_a, data_b],
