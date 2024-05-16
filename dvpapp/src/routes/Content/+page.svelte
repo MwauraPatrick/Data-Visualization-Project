@@ -7,7 +7,8 @@
   import Inventory  from '../../components/Inventory/Inventory.svelte';
   import { fetchData } from './../../components/data';
   import { summarizeCustomersByGroup, summarizeInventoryByGroup, fullJoinDataWithCoordinates } from './../../components/dataprocessing';
-
+  import TimeSeriesMonthly from '../../components/Timeseries/timeseriesmonthly.svelte';
+  
   let fetchedData = [];
   let summary = [];
   let inventorySummary = [];
@@ -79,11 +80,14 @@
             {#if id === "map"}
                 <div>
                     <h1>Inventory Orders Sales by Country</h1>
-                    <LeafletMap />
+                    <!-- Add leaflet map here -->
                 </div>
             {:else if id === "timeSeries"}
                 <div>
                     <TimeSeries />
+                </div>
+                <div>
+                  <TimeSeriesMonthly/>
                 </div>
             {:else if id === "correlations"}
                 <h2>{label} Content</h2>
