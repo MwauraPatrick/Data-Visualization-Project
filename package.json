@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@sveltejs/adapter-netlify": "^4.2.0",
+    "vite-plugin-static-copy": "^1.0.4"
+  }
+}

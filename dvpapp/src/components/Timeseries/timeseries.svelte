@@ -9,13 +9,15 @@
   
     let ctx;
     let chart; // Declare a variable to hold the Chart.js instance
-  
+    let monthlyChart;
+
     let startDate =  new Date('2024-03-01'); 
     let endDate = new Date('2024-03-10'); 
 
     let salesFilteredData = {};
     let salesQuantityData = {};
-
+    
+    let monthlySalesFilteredData = {};
     let foreacastFilteredData = {};
     let forcastQuantityData = {}
     
@@ -23,6 +25,55 @@
     const salesLabelsToExtract = ["SalesOrderCreationDate", "OrderQuantity"];
 
     let url = `https://raw.githubusercontent.com/JannesPeeters/suncharge/main/data/`
+
+    function applyFilterMonth(data, startDate, endDate, results, ...rowLabels) {
+        console.log("extracting data between " + startDate + " and " + endDate)
+        const filteredData = data[rowLabels[0]].reduce((acc, label, index) => {
+
+            try{
+                const date = new Date(label)
+                console.log(date)
+                // Filter based on date being within the start and end date range (inclusive)
+                const filtterCondition =  ( (date.getMonth() >= startDate.getMonth() && date.getFullYear() == startDate.getFullYear()) 
+                                    && (date.getMonth() <= endDate.getMonth() && date.getFullYear() == startDate.getFullYear()) );
+
+                if (filtterCondition){
+                    const dateString = date.toDateString(); // Convert to date string for grouping
+                    acc[dateString] = acc[dateString] || {};
+                    for (let i = 1; i < rowLabels.length; i++) {
+                        const l = rowLabels[i];
+                        acc[dateString][l] = (acc[dateString][l] || 0) + Number(data[l][index]); // Use label for indexing
+                    }
+                }
+            }catch(error)
+            {
+                console.error("Error parsing date:", error);
+            }
+
+            return acc;
+        }, {});
+
+
+        // Convert grouped data to arrays for labels (dates) and quantity
+        const filteredLabels = Object.keys(filteredData).sort((a, b) => new Date(a) - new Date(b));;
+        
+        results[rowLabels[0]] = filteredLabels
+
+        for (let i = 1; i < rowLabels.length; i++) {
+            const l = rowLabels[i];
+            results[l] = filteredLabels.map(dateString => filteredData[dateString][l])
+        };
+
+        // Optional: Format dates using Moment.js (if imported)
+        if (moment) {
+            results[rowLabels[0]].forEach((label, index) => {
+            results[rowLabels[0]][index] = moment(label).format('MM-DD-YYYY');
+            });
+        }
+        
+        return 1;
+    }
+
 
     /**
      * 
@@ -46,6 +97,61 @@
         }
     }
 
+    async function createMonthlyChart(){
+        self.console("Creating Monthly Data Chart")
+
+        //forcastQuantityData = await fetchData("Forecast", ...forecastLabelsToExtract)
+        applyFilterMonth(forcastQuantityData, startDate, endDate, foreacastFilteredData, ...forecastLabelsToExtract);
+        applyFilterMonth(salesQuantityData, startDate, endDate, monthlySalesFilteredData, ...salesLabelsToExtract);
+        monthlyChart = new ChartJS(ctx, {
+        type: 'line', 
+            data: {
+                labels: monthlySalesFilteredData[[salesLabelsToExtract[2]]],
+                datasets: [{
+                    label: monthlySalesFilteredData[[salesLabelsToExtract[1]]],
+                    data: [1, 2, 3, 4],
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 2
+                },
+                ]
+            },
+            options: {
+                plugins: {
+                datalabels: {
+                    anchor: 'end',
+                    align: 'end',
+                    },
+                },
+            scales: {
+                x: {
+                    type: 'time',
+                    time:{
+                        unit: 'day',
+                        displayFormats: { // Configure date display format for x-axis labels
+                             'day': 'DD-MM-YYYY', // Display as DD-MM-YYYY
+                        },
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 45,
+                        minRotation: 45
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Quantity'
+                        }
+                    }
+                }
+            }
+        });
+    }
     /**
      * 
      */
@@ -54,9 +160,7 @@
         
         /* get csvData */
         salesQuantityData = await fetchData("Sales", ...salesLabelsToExtract)
-        forcastQuantityData = await await fetchData("Forecast", ...forecastLabelsToExtract)
-
-        applyFilter2(forcastQuantityData, startDate, endDate, foreacastFilteredData, ...forecastLabelsToExtract);
+    
         applyFilter2(salesQuantityData, startDate, endDate, salesFilteredData, ...salesLabelsToExtract);
         
         ctx = chart.getContext('2d');
@@ -72,12 +176,6 @@
                     borderColor: 'rgb(255, 99, 132)',
                     borderWidth: 2
                 },
-                {
-                    label: "Forecast",
-                    data: [5, 15, 20, 10, 25],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                }
             ]
         },
         options: {
@@ -128,5 +226,6 @@ onMount(() => createChart()); // Create the chart on component mount
     </div>
 
     <canvas bind:this={chart} id = "TimeSeries" width=200 height=50 />
+    <canvas bind:this={monthlyChart} id = "TimeSeriesMonthly" width=200 height=50 />
 </div>
 

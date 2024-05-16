@@ -13,6 +13,7 @@
   let selectedDate = '31/01/2022'; // Default date
   let dateOptions = []; // Array to hold date options
 
+  
   async function updateMarkers() {
     if (map) {
       let data = [];
