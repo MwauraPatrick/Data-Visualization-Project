@@ -5,7 +5,7 @@ export async function createMap(mapElement) {
   try {
     const leaflet = await import('leaflet');
 
-    const map = leaflet.map(mapElement).setView([50.8283, 5.5795], 2);
+    const map = leaflet.map(mapElement).setView([50.8283, 10.5795], 2);
 
     leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

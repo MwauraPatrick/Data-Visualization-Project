@@ -206,7 +206,7 @@ L.marker([lat, lon], { icon: customIcon }).addTo(map)
   }
 
   main div {
-    height: 600px;
+    height: 400px;
     width: 100%;
   }
 
