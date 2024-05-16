@@ -11,8 +11,8 @@
     let chart; // Declare a variable to hold the Chart.js instance
     let monthlyChart;
 
-    let startDate =  new Date('2024-03-01'); 
-    let endDate = new Date('2024-03-10'); 
+    let startDate =  new Date('2024-05-01'); 
+    let endDate = new Date('2024-05-30'); 
 
     let salesFilteredData = {};
     let salesQuantityData = {};
@@ -48,6 +48,19 @@
         }
     }
 
+    function updateSelectedDate(selectedMonth, selectedYear) {
+        if (selectedMonth && selectedYear) {
+            //Do nothing
+        } else {
+            const today = new Date();
+            const month = (today.getMonth()+1).toString(); // Get month as a number (0-11)
+            const year = today.getFullYear().toString(); // Get full year (YYYY)
+            const day =  today.getDay().toString();
+            
+            startDate = year + '-' + month.padStart(2, '0') + day.padStart(2, '0')
+
+        }
+    }
     /**
      * 
      */
@@ -119,9 +132,9 @@ onMount(() => {
 <div class = "container">
     <div class = "inputs">
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" value="2024-03-01" on:change={() => { startDate = new Date(formatDate(new Date(event.target.value))); updateChartDate(); }}>
+        <input type="date" id="startDate" value="2024-05-01" on:change={() => { startDate = new Date(formatDate(new Date(event.target.value))); updateChartDate(); }}>
         <label for="endDate">End Date:</label>
-        <input type="date" id="endDate"  value="2024-03-10" on:change={() => { endDate = new Date(formatDate(new Date(event.target.value))); updateChartDate(); }}>
+        <input type="date" id="endDate"  value="2024-05-30" on:change={() => { endDate = new Date(formatDate(new Date(event.target.value))); updateChartDate(); }}>
     </div>
 
     <canvas bind:this={chart} id = "TimeSeries" width=200 height=50 />

@@ -162,14 +162,14 @@
             data: {
                 labels: monthlySalesFilteredData[salesLabelsToExtract[0]],
                 datasets: [{
-                        label:'Monthly Quntity',
+                        label:'Monthly Quantity',
                         data: monthlySalesFilteredData[salesLabelsToExtract[1]],
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         borderWidth: 2
                     },
                     {
-                        label:'Forecast Quntity',
+                        label:'Forecasted Quantity',
                         data: foreacastFilteredData[forecastLabelsToExtract[1]],
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
