@@ -9,13 +9,15 @@
   
     let ctx;
     let chart; // Declare a variable to hold the Chart.js instance
-  
+    let monthlyChart;
+
     let startDate =  new Date('2024-03-01'); 
     let endDate = new Date('2024-03-10'); 
 
     let salesFilteredData = {};
     let salesQuantityData = {};
-
+    
+    let monthlySalesFilteredData = {};
     let foreacastFilteredData = {};
     let forcastQuantityData = {}
     
@@ -54,9 +56,7 @@
         
         /* get csvData */
         salesQuantityData = await fetchData("Sales", ...salesLabelsToExtract)
-        forcastQuantityData = await await fetchData("Forecast", ...forecastLabelsToExtract)
-
-        applyFilter2(forcastQuantityData, startDate, endDate, foreacastFilteredData, ...forecastLabelsToExtract);
+    
         applyFilter2(salesQuantityData, startDate, endDate, salesFilteredData, ...salesLabelsToExtract);
         
         ctx = chart.getContext('2d');
@@ -72,12 +72,6 @@
                     borderColor: 'rgb(255, 99, 132)',
                     borderWidth: 2
                 },
-                {
-                    label: "Forecast",
-                    data: [5, 15, 20, 10, 25],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                }
             ]
         },
         options: {
@@ -117,7 +111,10 @@
     });
   };
 
-onMount(() => createChart()); // Create the chart on component mount
+onMount(() => {
+    createChart();
+    
+}); // Create the chart on component mount
 </script>
 <div class = "container">
     <div class = "inputs">
@@ -128,5 +125,6 @@ onMount(() => createChart()); // Create the chart on component mount
     </div>
 
     <canvas bind:this={chart} id = "TimeSeries" width=200 height=50 />
+    
 </div>
 

@@ -21,6 +21,7 @@ const locationIconUrl = 'https://raw.githubusercontent.com/MwauraPatrick/Data-Vi
   let selectedDate = moment('2022-01-31'); // Default date
   let dateOptions = []; // Array to hold date options
 
+  
   async function updateMarkers() {
     if (map) {
       let data = [];
