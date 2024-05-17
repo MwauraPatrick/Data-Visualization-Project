@@ -65,5 +65,4 @@
 
 <div class = "container">
     <canvas bind:this={chart} id = "TimeCost" width={200} height={50} />
-  
 </div>
