@@ -196,6 +196,7 @@
     nav {
         margin-bottom: 20px;
         text-align: center;
+        position: sticky; top: 0;
     }
 
     .tabs-container {
