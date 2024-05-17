@@ -34,6 +34,7 @@
                     anchor: 'end',
                     align: 'end',
                 },
+                
             },
             scales: {
                 x: {
@@ -61,4 +62,8 @@
   onMount(() => createBarChart()); // Create the chart on component mount
 </script>
 
-<canvas bind:this={chart} id = "BarChart" width={50} height={50} />
+
+<div class = "container">
+    <canvas bind:this={chart} id = "TimeCost" width={200} height={50} />
+  
+</div>

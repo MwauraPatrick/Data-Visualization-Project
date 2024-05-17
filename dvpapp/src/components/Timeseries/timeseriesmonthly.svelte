@@ -162,17 +162,17 @@
             data: {
                 labels: monthlySalesFilteredData[salesLabelsToExtract[0]],
                 datasets: [{
-                        label:'Monthly Quantity',
+                        label:'Monthly Sales',
                         data: monthlySalesFilteredData[salesLabelsToExtract[1]],
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         borderWidth: 2
                     },
                     {
-                        label:'Forecasted Quantity',
+                        label:'Forecasted Sales',
                         data: foreacastFilteredData[forecastLabelsToExtract[1]],
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgb(99, 255, 132)',
+                        borderColor: 'rgb(99, 255, 132)',
                         borderWidth: 2
                     },
                 ]
@@ -183,6 +183,16 @@
                     anchor: 'end',
                     align: 'end',
                     },
+                },
+                plugins: {
+                    title: {
+                        display: true, // Set to true to display the title
+                        text: 'Monthly Sales and Forcasted Quantity', // The title text
+                        font: {
+                        size: 16, // Optional: Set font size
+                        weight: 'bold' // Optional: Set font weight
+                        }
+                    }
                 },
             scales: {
                 x: {

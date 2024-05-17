@@ -61,4 +61,7 @@
   onMount(() => createScatterChart()); // Create the chart on component mount
 </script>
 
-<canvas bind:this={chart} id = "ScatterChart" width={50} height={50} />
+
+<div class = "container">
+    <canvas bind:this={chart} id = "Correlation" width={200} height={50} />
+</div>
