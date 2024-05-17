@@ -164,12 +164,12 @@ const Timeseries = create_ssr_component(($$result, $$props, $$bindings, slots) =
 const Correlation = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   Chart.register(PointElement, LinearScale, Title, Tooltip);
   let chart;
-  return `<canvas id="ScatterChart"${add_attribute("width", 50, 0)}${add_attribute("height", 50, 0)}${add_attribute("this", chart, 0)}></canvas>`;
+  return `<div class="container"><canvas id="Correlation"${add_attribute("width", 200, 0)}${add_attribute("height", 50, 0)}${add_attribute("this", chart, 0)}></canvas></div>`;
 });
 const Timecost = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   Chart.register(BarElement, CategoryScale, LinearScale, Title, Tooltip);
   let chart;
-  return `<canvas id="BarChart"${add_attribute("width", 50, 0)}${add_attribute("height", 50, 0)}${add_attribute("this", chart, 0)}></canvas>`;
+  return `<div class="container"><canvas id="TimeCost"${add_attribute("width", 200, 0)}${add_attribute("height", 50, 0)}${add_attribute("this", chart, 0)}></canvas></div>`;
 });
 const Inventory = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let chart;
