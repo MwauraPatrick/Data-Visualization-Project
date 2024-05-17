@@ -1,0 +1,10 @@
+{
+	"/": [
+		"src/routes/+page.js"
+	],
+	"/Content": [
+		"src/routes/Content/+page.js"
+	],
+	"/about": [],
+	"/groupinfo": []
+}
