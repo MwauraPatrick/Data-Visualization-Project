@@ -142,15 +142,30 @@ L.marker([lat, lon], { icon: customIcon }).addTo(map)
   }
 
   async function fetchDateOptions() {
-    try {
-      // Fetch all unique dates from inventory and forecast data
-      const inventoryDates = (await summarizeInventoryByGroup()).map(item => item.Date);
-      const forecastDates = (await summarizeForecastByGroup()).map(item => item.Date);
-      dateOptions = [...new Set([...inventoryDates, ...forecastDates])].sort().reverse();
-    } catch (error) {
-      console.error("Error fetching date options:", error);
-    }
+  try {
+    // Fetch all unique dates from inventory and forecast data
+    const inventoryDates = (await summarizeInventoryByGroup()).map(item => item.Date);
+    const forecastDates = (await summarizeForecastByGroup()).map(item => item.Date);
+    
+    // Function to parse 'dd/mm/yyyy' format to Date object
+    const parseDate = (dateStr) => {
+      const [day, month, year] = dateStr.split('/').map(Number);
+      return new Date(year, month - 1, day);
+    };
+    
+    // Combine dates, remove duplicates, and sort in descending order
+    dateOptions = [...new Set([...inventoryDates, ...forecastDates])]
+      .map(parseDate) // Convert strings to Date objects
+      .filter(date => !isNaN(date)) // Filter out invalid dates
+      .sort((a, b) => b - a) // Sort dates from latest to oldest
+      .map(date => `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`); // Format dates as dd/mm/yyyy
+    
+    console.log("Date options:", dateOptions);
+  } catch (error) {
+    console.error("Error fetching date options:", error);
   }
+}
+
 
   fetchDateOptions(); // Fetch date options on component mount
 
