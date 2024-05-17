@@ -139,6 +139,7 @@
             },
             ],
         };
+       
   
         chart = new ChartJS(ctx, {
             type: 'doughnut',
@@ -147,6 +148,16 @@
             // Optional chart options (refer to Chart.js documentation)
             responsive: false, // Makes chart responsive to screen size
             maintainAspectRatio: false, // Prevents chart distortion
+            plugins: {
+                    title: {
+                        display: true, // Set to true to display the title
+                        text: 'Inventory Quantity', // The title text
+                        font: {
+                        size: 16, // Optional: Set font size
+                        weight: 'bold' // Optional: Set font weight
+                        }
+                    }
+                },
             },
         });
     }
