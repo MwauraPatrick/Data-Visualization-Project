@@ -79,7 +79,7 @@
             data: {
                 labels: salesFilteredData[salesLabelsToExtract[0]],
                 datasets: [{
-                    label: "Quantity",
+                    label: "Daily Sales",
                     data: salesFilteredData[salesLabelsToExtract[1]],
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
@@ -93,7 +93,15 @@
                 anchor: 'end',
                 align: 'end',
             },
-        },
+            title: {
+                display: true, // Set to true to display the title
+                text: 'Daily Sales  Quantity', // The title text
+                font: {
+                    size: 16, // Optional: Set font size
+                    weight: 'bold' // Optional: Set font weight
+                    }
+                }
+            },
             scales: {
                 x: {
                     type: 'time',

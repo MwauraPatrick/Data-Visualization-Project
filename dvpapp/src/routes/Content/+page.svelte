@@ -81,7 +81,7 @@
                 <div>
 
                   <h1 style="padding: 0px; margin: 1px; margin-top: 2px; margin-bottom: 1px; align: center ">Inventory Quantities by Date</h1>
-                    <LeafletMap />
+                    
 
                 </div>
             {:else if id === "timeSeries"}
